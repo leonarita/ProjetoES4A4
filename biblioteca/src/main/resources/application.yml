@@ -9,7 +9,7 @@ spring:
     driverClassName: org.postgresql.Driver
     hikari:
       schema: biblioteca
-    url: jdbc:postgresql://localhost:5432/dbbiblioteca
+    url: jdbc:postgresql://localhost:5432/dbtestes
     username: postgres
     password: postgres
 
