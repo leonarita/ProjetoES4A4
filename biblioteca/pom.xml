@@ -22,6 +22,7 @@
 		<spring-boot.starter>2.2.4.RELEASE</spring-boot.starter>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
 		<swagger.version>2.9.2</swagger.version>
+		<mail.version>1.4.7</mail.version>
 		<feign.version>1.4.7.RELEASE</feign.version>
 	</properties>
 
@@ -70,6 +71,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		
+		<!-- Email -->
+		
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>${mail.version}</version>
 		</dependency>
 		
 		<!-- Security -->
