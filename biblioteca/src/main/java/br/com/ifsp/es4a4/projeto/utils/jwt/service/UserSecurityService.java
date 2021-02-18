@@ -73,5 +73,8 @@ public class UserSecurityService {
 		}
 	}
 
+	public Claims decodeToken(String token) {
+		return this.tokenService.decodeToken(token.replace("Bearer ", ""));
+	}
 
 }

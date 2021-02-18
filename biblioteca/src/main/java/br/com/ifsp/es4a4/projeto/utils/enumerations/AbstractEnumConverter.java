@@ -13,7 +13,7 @@ public class AbstractEnumConverter<ENUM extends EnumID> implements AttributeConv
 	}
 
 	@Override
-	public Integer convertToDatabaseColumn(EnumID attribute) {
+	public Integer convertToDatabaseColumn(ENUM attribute) {
 		return attribute.getId();
 	}
 

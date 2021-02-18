@@ -21,7 +21,7 @@ public class TokenService {
 		
 		return Jwts.builder()
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setSubject("Teste JWT API")
+				.setSubject(user.getEmail())
 				.setExpiration(new Date(System.currentTimeMillis() + expirationTime))
 				.signWith(SignatureAlgorithm.HS256, key)
 				.compact();
