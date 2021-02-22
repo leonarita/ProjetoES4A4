@@ -50,6 +50,11 @@ public class UserSecurityService {
 		throw new InvalidLoginException();
 	}
 	
+	public Long getIdByToken(String token) {
+		String email = this.tokenService.decodeToken(token.replace("Bearer ", "")).getSubject();
+		return this.usuarioService.findIdByEmail(email);
+	}
+	
 	public boolean validate(String token) {
 		if(token.isEmpty())
 			throw new InvalidTokenException();

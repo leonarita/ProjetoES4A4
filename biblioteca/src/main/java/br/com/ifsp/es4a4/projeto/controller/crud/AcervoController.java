@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifsp.es4a4.projeto.model.Acervo;
 import br.com.ifsp.es4a4.projeto.service.AcervoService;
+import br.com.ifsp.es4a4.projeto.utils.routes.AllowAnnonymous;
 import lombok.RequiredArgsConstructor;
 
+@AllowAnnonymous
 @RestController
 @RequestMapping("/acervo")
 @RequiredArgsConstructor

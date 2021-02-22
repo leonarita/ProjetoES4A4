@@ -14,8 +14,8 @@ public class TokenService {
 	
 	private String key = "String Aleatoria Secret";
 	
-	// 30 minutos
-	private static final long expirationTime = 1800000;
+	// 1 hora
+	private static final long expirationTime = 3600000;
 	
 	public String generateToken(Usuario user) {
 		

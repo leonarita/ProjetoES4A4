@@ -1,5 +1,7 @@
 package br.com.ifsp.es4a4.projeto.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,8 +15,9 @@ public class SistemaController {
 	
 	private final SistemaFacade sistemaFacade;
 	
-	public void emprestarItem() {
-		
+	@GetMapping("/emprestar")
+	public void emprestarItem(@RequestHeader String Authorization) {
+		this.sistemaFacade.emprestarItem(Authorization);
 	}
 	
 	public void devolverItemEmprestado() {

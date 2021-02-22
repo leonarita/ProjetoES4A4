@@ -27,6 +27,10 @@ public class UsuarioService {
 		return this.usuarioRepository.findByEmail(email);
 	}
 	
+	public Long findIdByEmail(String email) {
+		return this.usuarioRepository.findIdByEmail(email);
+	}
+	
 	public Usuario save(Usuario usuario) {
 		return this.usuarioRepository.save(usuario);
 	}
