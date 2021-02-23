@@ -15,9 +15,8 @@ public class SistemaController {
 	
 	private final SistemaFacade sistemaFacade;
 	
-	@GetMapping("/emprestar")
 	public void emprestarItem(@RequestHeader String Authorization) {
-		this.sistemaFacade.emprestarItem(Authorization);
+
 	}
 	
 	public void devolverItemEmprestado() {
