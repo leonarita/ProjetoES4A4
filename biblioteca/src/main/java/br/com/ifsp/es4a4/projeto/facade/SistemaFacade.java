@@ -1,13 +1,9 @@
 package br.com.ifsp.es4a4.projeto.facade;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import br.com.ifsp.es4a4.projeto.model.Emprestimo;
 import br.com.ifsp.es4a4.projeto.service.EmprestimoService;
 import br.com.ifsp.es4a4.projeto.utils.exceptions.InvalidBodyEmailException;
 import br.com.ifsp.es4a4.projeto.utils.exceptions.InvalidRecipientException;
@@ -28,25 +24,7 @@ public class SistemaFacade {
 	
 	public void emprestarItem(String Authorization) {
 		
-		// Pegar o usuário
-		Long idUsuario = this.userSecurityService.getIdByToken(Authorization);
-		
-		// Pegar o item
-		long item = 2l;
-		
-		// Salvar no BD
-		this.emprestimoService.create(
-				Emprestimo.builder().dataDevolucaoEfetiva(new Date()).dataRetirada(new Date()).idItemAcervo(item).idUsuarioComum(idUsuario).build()
-		);
-		
-		// Enviar o email do item pegado
-		sendEmail(
-				EmailDto.builder()
-					.recipientsTO(new ArrayList<>(Arrays.asList("natan.apk@gmail.com")))
-					.title("AVISO ITEM BIBLIOTECA")
-					.msgHTML("DEU CERTO, DEVOLVA O ITEM LOGO")
-					.build()
-		);
+
 		
 	}
 
