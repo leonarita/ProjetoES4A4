@@ -49,8 +49,11 @@ As configurações de banco de dados (url, driver, username password) também es
 
 1. Spring Boot
 2. Spring Data
-3. JWT
-4. Nodemailer
+3. Spring Security
+4. JPA
+5. JWT
+6. Nodemailer
+7. Flyway
 
 
 
