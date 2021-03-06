@@ -24,13 +24,24 @@
 
 <br>
 
-OBS 1: Caso o lombok não esteja configurado, os métodos getters, setters e construtores vão gerar erros.
+### OBS 1: Lombok
+Caso o lombok não esteja configurado, os métodos getters, setters e construtores vão gerar erros.
 <br>
 [Clique aqui para abrir um site de referência para instalar o lombok no STS.](https://dicasdejava.com.br/como-configurar-o-lombok-no-eclipse/)
 
 <br>
 
-OBS 2: Para configurar um email para enviar emails no sistema no gmail, [precisa ativar o acesso a apps menos seguros](https://myaccount.google.com/lesssecureapps).
+### OBS 2: Email Remetente
+Para configurar um email para enviar emails no sistema no gmail, [precisa ativar o acesso a apps menos seguros](https://myaccount.google.com/lesssecureapps).
+<br><br>
+As informações de remetente (email e senha) devem estar no arquivo application.yml na pasta src/main/resources, nos campos username e password respectivamente.
+<br><br>
+Um aviso para os desenvolvedores, sempre evitar de deixar as senhas de email expostas.
+
+<br>
+
+### OBS 3: Banco de Dados
+As configurações de banco de dados (url, driver, username password) também estão no arquivo application.yml na pasta src/main/resources.
 
 <br>
 
