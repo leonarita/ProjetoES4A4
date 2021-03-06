@@ -33,10 +33,8 @@ Caso o lombok não esteja configurado, os métodos getters, setters e construtor
 
 ### OBS 2: Email Remetente
 Para configurar um email para enviar emails no sistema no gmail, [precisa ativar o acesso a apps menos seguros](https://myaccount.google.com/lesssecureapps).
-<br><br>
-As informações de remetente (email e senha) devem estar no arquivo application.yml na pasta src/main/resources, nos campos username e password respectivamente.
-<br><br>
-Um aviso para os desenvolvedores, sempre evitar de deixar as senhas de email expostas.
+<br>
+As informações de remetente (username e password) devem estar no arquivo application.yml na pasta src/main/resources.
 
 <br>
 
