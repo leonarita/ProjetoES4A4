@@ -5,5 +5,5 @@
 É um projeto de um sistema bibliotecário baseado no seguinte Diagrama de Classes:
 
 <br>
-<img src="/Diagrama de Classes - Sistema Bibliotecário.png">
+<img src="/Diagrama de Classes - Sistema Biblioteca.png">
 <br>
