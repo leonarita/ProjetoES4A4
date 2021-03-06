@@ -8,7 +8,7 @@
 <img src="/Diagrama de Classes - Sistema Biblioteca.png">
 <br>
 
-- Em termos técnicos, é uma API que consiste em, basicamente, realizar operações CRUD, realizar login e enviar email.
+- Em termos técnicos, é uma API que consiste em, basicamente, operações CRUD, realizar login e enviar email.
 - Em termos de negócio, é possível cadastrar items e usuários, realizar empréstimos, reservas e devoluções de item.
 
 <br>
