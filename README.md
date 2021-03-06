@@ -35,6 +35,8 @@ Caso o lombok não esteja configurado, os métodos getters, setters e construtor
 Para configurar um email para enviar emails no sistema no gmail, [precisa ativar o acesso a apps menos seguros](https://myaccount.google.com/lesssecureapps).
 <br>
 As informações de remetente (username e password) devem estar no arquivo application.yml na pasta src/main/resources.
+<br>
+Um aviso para os desenvolvedores é sempre evitar de deixar as senhas de email expostas.
 
 <br>
 
