@@ -55,5 +55,11 @@ As configurações de banco de dados (url, driver, username password) também es
 6. Nodemailer
 7. Flyway
 
+<br>
+
+## Aplicações Complementares
+
+O [Projeto de DW2A4](https://github.com/leonarita/ProjetoDW2A4), que utiliza Angular, é uma aplicação front-end que utiliza as rotas do controller LivroController para exemplicar conceitos do Angular. Por esse motivo, as rotas desse controller não demandam autenticação.
+
 
 
