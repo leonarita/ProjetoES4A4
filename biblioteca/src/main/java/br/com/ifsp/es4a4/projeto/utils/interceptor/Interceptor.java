@@ -3,8 +3,6 @@ package br.com.ifsp.es4a4.projeto.utils.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.aop.framework.AopProxyUtils;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -23,25 +21,29 @@ public class Interceptor implements HandlerInterceptor {
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		
-		final AllowAnnonymous allowAnnonymousClass = AnnotationUtils.findAnnotation(AopProxyUtils.ultimateTargetClass(handler), AllowAnnonymous.class);
-		final AllowAnnonymous allowAnnonymousMethod = ((HandlerMethod)handler).getMethod().getAnnotation((AllowAnnonymous.class));
-		
-		if(allowAnnonymousClass != null || allowAnnonymousMethod != null)
-			return true;
-		
-		if (validateToken(request.getHeader("Authorization"))) {
+
+		try {
+			final AllowAnnonymous allowAnnonymousMethod = ((HandlerMethod)handler).getMethod().getAnnotation((AllowAnnonymous.class));
 			
-			response.addHeader("Interceptor", "Authorization OK");
-            log.info("Autenticação válida e autorização permitida!");
-
-            return true;
-        }
-		
-		response.addHeader("Interceptor", "Authorization Invalid");
-		log.error("Autenticação inválida e autorização não permitida!");
-
-		return false;
+			if(allowAnnonymousMethod != null)
+				return true;
+			
+			if (validateToken(request.getHeader("Authorization"))) {
+				
+				response.addHeader("Interceptor", "Authorization OK");
+	            log.info("Autenticação válida e autorização permitida!");
+	
+	            return true;
+	        }
+			
+			response.addHeader("Interceptor", "Authorization Invalid");
+			log.error("Autenticação inválida e autorização não permitida!");
+	
+			return false;
+		}
+		catch (Exception e) {
+			return false;
+		}
 		
 	}
 	

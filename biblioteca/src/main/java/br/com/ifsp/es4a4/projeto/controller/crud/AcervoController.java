@@ -2,6 +2,7 @@ package br.com.ifsp.es4a4.projeto.controller.crud;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +16,10 @@ import br.com.ifsp.es4a4.projeto.service.AcervoService;
 import br.com.ifsp.es4a4.projeto.utils.routes.AllowAnnonymous;
 import lombok.RequiredArgsConstructor;
 
-@AllowAnnonymous
 @RestController
 @RequestMapping("/acervo")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class AcervoController {
 	
 	private final AcervoService acervoService;
