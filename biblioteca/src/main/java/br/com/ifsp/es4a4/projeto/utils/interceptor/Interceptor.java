@@ -3,12 +3,14 @@ package br.com.ifsp.es4a4.projeto.utils.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.reflections.Reflections;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import br.com.ifsp.es4a4.projeto.utils.jwt.service.UserSecurityService;
 import br.com.ifsp.es4a4.projeto.utils.routes.AllowAnnonymous;
+import br.com.ifsp.es4a4.projeto.utils.routes.CacheAnnotedClasses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,14 +20,19 @@ import lombok.extern.slf4j.Slf4j;
 public class Interceptor implements HandlerInterceptor {
 	
 	private final UserSecurityService userSecurityService;
+	private final CacheAnnotedClasses cacheAnnotedClasses;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
+		
 		try {
-			final AllowAnnonymous allowAnnonymousMethod = ((HandlerMethod)handler).getMethod().getAnnotation((AllowAnnonymous.class));
 			
-			if(allowAnnonymousMethod != null)
+			HandlerMethod handlerMethod = (HandlerMethod)request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingHandler");
+			
+			//final AllowAnnonymous allowAnnonymousMethod = ((HandlerMethod)handler).getMethod().getAnnotation((AllowAnnonymous.class));
+			final AllowAnnonymous allowAnnonymousMethod = handlerMethod.getMethod().getAnnotation((AllowAnnonymous.class));
+			
+			if( cacheAnnotedClasses.classHasAnonymousAnnotation(handlerMethod.getBeanType().toString().replace("class ", "")) || allowAnnonymousMethod != null )
 				return true;
 			
 			if (validateToken(request.getHeader("Authorization"))) {

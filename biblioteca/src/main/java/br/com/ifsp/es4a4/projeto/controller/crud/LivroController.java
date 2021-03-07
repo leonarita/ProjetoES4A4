@@ -22,12 +22,12 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/livro")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
+@AllowAnnonymous
 public class LivroController {
 	
 	private final LivroService livroService;
 
 	@GetMapping
-	@AllowAnnonymous
 	public List<Livro> findAll() {
 		return this.livroService.findAll();
 	}
@@ -38,7 +38,6 @@ public class LivroController {
 	}
 	
 	@PostMapping
-	@AllowAnnonymous
 	public Livro create(@RequestBody(required = false) Livro livro) {
 		
 		if(Objects.isNull(livro.getSituacaoItem())) {
@@ -49,7 +48,6 @@ public class LivroController {
 	}
 	
 	@DeleteMapping("/{id}")
-	@AllowAnnonymous
 	public Livro deleteById(@PathVariable("id") Long id) {
 		this.livroService.deleteById(id);
 		return new Livro();
