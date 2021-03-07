@@ -2,7 +2,7 @@
 
 ## Descrição do Projeto
 
-É um projeto desenvolvido para a disciplina Engenharia de Software IV (ES4A4) de um sistema bibliotecário baseado no seguinte Diagrama de Classes:
+É um projeto desenvolvido para a disciplina Engenharia de Software IV (ES4A4) de um sistema bibliotecário baseado no seguinte Diagrama de Classes (com algumas adaptações):
 
 <br>
 <img src="/Diagrama de Classes - Sistema Biblioteca.png">
