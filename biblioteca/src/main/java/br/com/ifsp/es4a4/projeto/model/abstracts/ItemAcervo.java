@@ -63,15 +63,15 @@ public abstract class ItemAcervo {
 	protected Situacao situacaoItem;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item_acervo")
+	@JoinColumn(name = "id_item_acervo", insertable = false, updatable = false)
 	private List<Autoria> autorias;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item_acervo")
+	@JoinColumn(name = "id_item_acervo", insertable = false, updatable = false)
 	private List<Emprestimo> emprestimos;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item_acervo") 
+	@JoinColumn(name = "id_item_acervo", insertable = false, updatable = false) 
 	private List<Reserva> reservas;
 	
 //	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

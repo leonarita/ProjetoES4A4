@@ -32,7 +32,7 @@ public class Autor extends Pessoa {
 	private String orcid;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_autor", nullable = false, updatable = false)
+	@JoinColumn(name = "id_autor", nullable = false, updatable = false, insertable = false)
 	private List<Autoria> autorias;
 	
 }

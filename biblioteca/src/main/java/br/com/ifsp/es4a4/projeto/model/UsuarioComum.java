@@ -36,11 +36,11 @@ public class UsuarioComum extends Pessoa {
 	private Integer idUsuario;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario_comum")
+	@JoinColumn(name = "id_usuario_comum", insertable = false, updatable = false)
 	private List<Emprestimo> emprestimos;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario_comum")
+	@JoinColumn(name = "id_usuario_comum", insertable = false, updatable = false)
 	private List<Reserva> reservas;
 
 }

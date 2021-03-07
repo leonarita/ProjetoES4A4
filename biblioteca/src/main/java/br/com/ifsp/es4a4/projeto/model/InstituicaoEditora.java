@@ -50,7 +50,7 @@ public class InstituicaoEditora {
 //			@JoinColumn(name = "idItemAcervo", referencedColumnName = "id_instituicao_editora") 
 //	})
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_instituicao_editora")
+	@JoinColumn(name = "id_instituicao_editora", insertable = false, updatable = false)
 	private List<EditoraItem> editoras;
 	
 	

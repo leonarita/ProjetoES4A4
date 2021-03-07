@@ -28,7 +28,7 @@ public class Autoria {
 	protected Long idItemAcervo;
 	
 	@Id
-	@Column(name = "id_autor", nullable = false, updatable = false, insertable = false)
+	@Column(name = "id_autor", nullable = false, updatable = false)
 	protected Long idAutor;
 
 	@Column(name = "bl_editor")
