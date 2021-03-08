@@ -59,7 +59,7 @@ As configurações de banco de dados (url, driver, username password) também es
 
 ## Aplicações Complementares
 
-O [Projeto de DW2A4](https://github.com/leonarita/ProjetoDW2A4), que utiliza Angular, é uma aplicação front-end que utiliza as rotas do controller LivroController para exemplicar conceitos do Angular. Por esse motivo, as rotas desse controller não demandam autenticação.
+O [Projeto de DW2A4](https://github.com/leonarita/ProjetoDW2A4/tree/master/EXAMPLE01), que utiliza Angular, é uma aplicação front-end que utiliza as rotas do controller LivroController para exemplicar conceitos do Angular. Por esse motivo, as rotas desse controller não demandam autenticação.
 
 
 
