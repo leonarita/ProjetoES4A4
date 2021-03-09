@@ -4,8 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.ifsp.es4a4.projeto.model.abstracts.ItemAcervo;
 import br.com.ifsp.es4a4.projeto.model.pk.AutoriaId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,4 +36,12 @@ public class Autoria {
 
 	@Column(name = "bl_editor")
 	private Boolean eEditor;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_autor", insertable = false, updatable = false)
+	private Autor autor;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_autor", insertable = false, updatable = false)
+	private ItemAcervo item;
 }

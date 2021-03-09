@@ -18,16 +18,8 @@ public class EditoraItemService {
 		return this.editoraItemRepository.findAll();
 	}
 	
-	public EditoraItem findById(Long id) {
-		return this.editoraItemRepository.findById(id).orElse(null);
-	}
-	
 	public EditoraItem create(EditoraItem editoraItem) {
 		return this.editoraItemRepository.save(editoraItem);
-	}
-
-	public void deleteById(Long id) {
-		this.editoraItemRepository.deleteById(id);
 	}
 
 }

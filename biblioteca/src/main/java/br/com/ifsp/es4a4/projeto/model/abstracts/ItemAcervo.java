@@ -13,11 +13,15 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.ifsp.es4a4.projeto.model.Acervo;
 import br.com.ifsp.es4a4.projeto.model.Autoria;
 import br.com.ifsp.es4a4.projeto.model.EditoraItem;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
@@ -58,30 +62,31 @@ public abstract class ItemAcervo {
 	@Temporal(TemporalType.DATE)
 	protected Date dataPublicacao;
 	
+	@Column(name = "id_acervo")
+	protected Long idAcervo;
+	
 	@Convert(converter = Situacao.Converter.class)
 	@Column(name = "nr_situacao_item", nullable = false)
 	protected Situacao situacaoItem;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item_acervo", insertable = false, updatable = false)
-	private List<Autoria> autorias;
+	@ManyToOne
+	@JoinColumn(name = "id_acervo", insertable = false, updatable = false)
+	private Acervo acervo;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item_acervo", insertable = false, updatable = false)
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+	private List<Autoria> autorias;
+
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
 	private List<Emprestimo> emprestimos;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item_acervo", insertable = false, updatable = false) 
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item") 
 	private List<Reserva> reservas;
 	
-//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JoinTable(name = "tb_editoras_items", joinColumns = { 
-//			@JoinColumn(name = "idItemAcervo", referencedColumnName = "id_item_acervo") 
-//	}, inverseJoinColumns = { 
-//			@JoinColumn(name = "id", referencedColumnName = "id_instituicao_editora") 
-//	})
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item_acervo")
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
 	private List<EditoraItem> editoras;
 	
 }

@@ -18,16 +18,8 @@ public class AutoriaService {
 		return this.autoriaRepository.findAll();
 	}
 	
-	public Autoria findById(Long id) {
-		return this.autoriaRepository.findById(id).orElse(null);
-	}
-	
 	public Autoria create(Autoria autoria) {
 		return this.autoriaRepository.save(autoria);
-	}
-
-	public void deleteById(Long id) {
-		this.autoriaRepository.deleteById(id);
 	}
 
 }

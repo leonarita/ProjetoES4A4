@@ -6,11 +6,12 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.ifsp.es4a4.projeto.model.abstracts.Pessoa;
 import lombok.AllArgsConstructor;
@@ -35,12 +36,12 @@ public class UsuarioComum extends Pessoa {
 	@Column(name = "id_usuario", nullable = false)
 	private Integer idUsuario;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario_comum", insertable = false, updatable = false)
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioComum")
 	private List<Emprestimo> emprestimos;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario_comum", insertable = false, updatable = false)
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioComum")
 	private List<Reserva> reservas;
 
 }

@@ -5,9 +5,10 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.ifsp.es4a4.projeto.model.abstracts.Pessoa;
 import lombok.AllArgsConstructor;
@@ -31,8 +32,8 @@ public class Autor extends Pessoa {
 	@Column(name = "st_orcid", nullable = false)
 	private String orcid;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_autor", nullable = false, updatable = false, insertable = false)
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "autor")
 	private List<Autoria> autorias;
 	
 }

@@ -18,16 +18,8 @@ public class ReservaService {
 		return this.reservaRepository.findAll();
 	}
 	
-	public Reserva findById(Long id) {
-		return this.reservaRepository.findById(id).orElse(null);
-	}
-	
 	public Reserva create(Reserva reserva) {
 		return this.reservaRepository.save(reserva);
-	}
-
-	public void deleteById(Long id) {
-		this.reservaRepository.deleteById(id);
 	}
 
 }

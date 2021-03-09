@@ -15,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.ifsp.es4a4.projeto.model.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,6 +50,7 @@ public abstract class Pessoa {
 	@Temporal(TemporalType.DATE)
 	protected Date nascimento;
 	
+	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_pessoa", nullable = false, insertable = false, updatable = false)
 	protected Usuario usuario;

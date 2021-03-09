@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,12 @@ public class TrabalhoAcademicoController {
 	
 	@PostMapping
 	public TrabalhoAcademico create(@RequestBody(required = false) TrabalhoAcademico trabalhoAcademico) {
+		return this.trabalhoAcademicoService.create(trabalhoAcademico);
+	}
+	
+	@PutMapping("/{id}")
+	public TrabalhoAcademico update(@PathVariable Long id, @RequestBody(required = false) TrabalhoAcademico trabalhoAcademico) {
+		trabalhoAcademico.setIdAcervo(id);
 		return this.trabalhoAcademicoService.create(trabalhoAcademico);
 	}
 	

@@ -8,10 +8,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,14 +44,8 @@ public class InstituicaoEditora {
 	@Column(name = "st_nome", nullable = false)
 	private String nome;
 	
-//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JoinTable(name = "tb_editoras_items", joinColumns = { 
-//			@JoinColumn(name = "id", referencedColumnName = "id_item_acervo") 
-//	}, inverseJoinColumns = { 
-//			@JoinColumn(name = "idItemAcervo", referencedColumnName = "id_instituicao_editora") 
-//	})
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_instituicao_editora", insertable = false, updatable = false)
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "instituicaoEditora")
 	private List<EditoraItem> editoras;
 	
 	

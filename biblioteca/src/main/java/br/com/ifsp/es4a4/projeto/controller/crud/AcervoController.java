@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,12 @@ public class AcervoController {
 	
 	@PostMapping
 	public Acervo create(@RequestBody(required = false) Acervo acervo) {
+		return this.acervoService.create(acervo);
+	}
+	
+	@PutMapping("/{id}")
+	public Acervo update(@PathVariable Long id, @RequestBody(required = false) Acervo acervo) {
+		acervo.setId(id);
 		return this.acervoService.create(acervo);
 	}
 	

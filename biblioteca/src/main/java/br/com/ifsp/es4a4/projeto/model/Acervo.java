@@ -8,10 +8,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.ifsp.es4a4.projeto.model.abstracts.ItemAcervo;
 import lombok.AllArgsConstructor;
@@ -38,8 +39,8 @@ public class Acervo {
 	@Column(name = "st_assunto", nullable = false)
 	private String assunto;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item_acervo", insertable = false, updatable = false)
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "acervo")
 	private List<ItemAcervo> itemsAcervo;
 
 }

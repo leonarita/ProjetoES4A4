@@ -17,17 +17,9 @@ public class EmprestimoService {
 	public List<Emprestimo> findAll() {
 		return this.emprestimoRepository.findAll();
 	}
-	
-	public Emprestimo findById(Long id) {
-		return this.emprestimoRepository.findById(id).orElse(null);
-	}
-	
+
 	public Emprestimo create(Emprestimo emprestimo) {
 		return this.emprestimoRepository.save(emprestimo);
-	}
-
-	public void deleteById(Long id) {
-		this.emprestimoRepository.deleteById(id);
 	}
 
 }

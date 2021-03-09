@@ -6,10 +6,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.com.ifsp.es4a4.projeto.model.abstracts.ItemAcervo;
 import br.com.ifsp.es4a4.projeto.model.pk.ReservaId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,5 +46,13 @@ public class Reserva {
 	@Column(name = "dt_data_expiracao")
 	@Temporal(TemporalType.DATE)
 	private Date dataExpiracao;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_item_acervo", insertable = false, updatable = false)
+	private ItemAcervo item;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_usuario_comum", insertable = false, updatable = false)
+	private UsuarioComum usuarioComum;
 
 }
