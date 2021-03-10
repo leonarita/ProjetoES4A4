@@ -1,9 +1,5 @@
 package br.com.ifsp.es4a4.projeto.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
