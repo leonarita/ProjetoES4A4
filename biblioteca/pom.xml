@@ -19,11 +19,8 @@
 	<properties>
 		<java.version>11</java.version>
 		
-		<spring-boot.starter>2.2.4.RELEASE</spring-boot.starter>
-		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
-		<swagger.version>2.9.2</swagger.version>
 		<mail.version>1.4.7</mail.version>
-		<feign.version>1.4.7.RELEASE</feign.version>
+		<cucumber.version>1.2.0</cucumber.version>
 	</properties>
 
 	<dependencies>
@@ -89,19 +86,13 @@
 		    <version>5.4.2</version>
 		</dependency>
 		
-		<!--  
-		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-config</artifactId>
-		    <version>4.1.3.RELEASE</version>
-		</dependency>
-		-->
-		
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+		
+		<!-- Reflections -->
 		
 		<dependency>
 			<groupId>org.reflections</groupId>
