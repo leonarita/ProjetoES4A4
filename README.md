@@ -10,6 +10,7 @@
 
 - Em termos técnicos, é uma API que consiste em, basicamente, operações CRUD, realizar login e enviar email.
 - Em termos de negócio, é possível cadastrar items e usuários, realizar empréstimos, reservas e devoluções de item.
+- Ao que se refere à Engenharia de Software, inclui Engenharia de Requisitos, Metodologias Ágeis, Arquitetura, Design Patterns e Testes Automatizados.
 
 <br>
 
@@ -54,6 +55,15 @@ As configurações de banco de dados (url, driver, username password) também es
 5. JWT
 6. Nodemailer
 7. Flyway
+8. jUnit 5
+
+<br>
+
+## Testes Automatizados
+
+Encontram-se na pasta src/test/java:
+- Testes Unitários: Feitos pelo jUnit
+- Testes de Integração: Feitos pelo jUnit
 
 <br>
 
