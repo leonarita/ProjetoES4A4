@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ import br.com.ifsp.es4a4.projeto.facade.ItemFiltroDto;
 import br.com.ifsp.es4a4.projeto.model.enumerations.TipoTrabalho;
 
 @SpringBootTest
+@DisplayName("User History: Buscar items disponíveis para consulta local")
 public class UserHistory_ItemsDisponiveisTests {
 	
 	// TESTES BASEADOS NOS DADOS DO SCRIPT FLYWAY Nº 4
@@ -29,22 +31,25 @@ public class UserHistory_ItemsDisponiveisTests {
 	// LIVROS
 	
 	@Test
+	@DisplayName("Busca de livros com base na massa de dados do Flyway")
 	void testarLivrosDisponiveis() {
 		assertThat(sistemaController.pegarLivrosDisponiveis(new ItemFiltroDto()).size()).isEqualTo(4);
 	}
 	
 	@Test
+	@DisplayName("Busca de livros com base na massa de dados do Flyway com parâmetros 01")
 	void testarLivrosDisponiveisComParametros1() {
 		assertThat(sistemaController.pegarLivrosDisponiveis(
 				ItemFiltroDto.builder()
-					.titulo("arry ")
-					.areaConhecimento(new ArrayList<String>(Arrays.asList("Aventura")))
+					.titulo("Star ")
+					.areaConhecimento(new ArrayList<String>(Arrays.asList("Ficção")))
 					.build()
-		).size()).isEqualTo(1);
+		).get(0).getAutorias().get(1).getEEditor()).isTrue();
 	}
 
 	
 	@Test
+	@DisplayName("Busca de livros com base na massa de dados do Flyway com parâmetros 02")
 	void testarLivrosDisponiveisComParametros2() {
 		assertThat(sistemaController.pegarLivrosDisponiveis(
 					ItemFiltroDto.builder()
@@ -60,11 +65,13 @@ public class UserHistory_ItemsDisponiveisTests {
 	// REVISTAS
 	
 	@Test
+	@DisplayName("Busca de revistas com base na massa de dados do Flyway")
 	void testarRevistasDisponiveis() {
 		assertThat(sistemaController.pegarRevistasDisponiveis(new ItemFiltroDto()).size()).isEqualTo(2);
 	}
 	
 	@Test
+	@DisplayName("Busca de revistas com base na massa de dados do Flyway com parâmetros 01")
 	void testarRevistasDisponiveisComParametros1() {
 		assertThat(sistemaController.pegarRevistasDisponiveis(
 				ItemFiltroDto.builder()
@@ -75,6 +82,7 @@ public class UserHistory_ItemsDisponiveisTests {
 	}
 
 	@Test
+	@DisplayName("Busca de revistas com base na massa de dados do Flyway com parâmetros 02")
 	void testarRevistasDisponiveisComParametros2() {
 		assertThat(sistemaController.pegarRevistasDisponiveis(
 					ItemFiltroDto.builder()
@@ -88,11 +96,13 @@ public class UserHistory_ItemsDisponiveisTests {
 	// TRABALHOS ACADÊMICOS
 	
 	@Test
+	@DisplayName("Busca de trabalhos acadêmicos com base na massa de dados do Flyway")
 	void testarTrabalhosAcademicosDisponiveis() {
 		assertThat(sistemaController.pegarTrabalhosAcademicosDisponiveis(new ItemFiltroDto()).size()).isEqualTo(1);
 	}
 	
 	@Test
+	@DisplayName("Busca de trabalhos acadêmicos com base na massa de dados do Flyway com parâmetros 01")
 	void testarTrabalhosAcademicosDisponiveisComParametros1() {
 		assertThat(sistemaController.pegarTrabalhosAcademicosDisponiveis(
 				ItemFiltroDto.builder()
@@ -102,6 +112,7 @@ public class UserHistory_ItemsDisponiveisTests {
 	}
 
 	@Test
+	@DisplayName("Busca de trabalhos acadêmicos com base na massa de dados do Flyway com parâmetros 01")
 	void testarTrabalhosAcademicosDisponiveisComParametros2() throws ParseException {
 		assertThat(sistemaController.pegarTrabalhosAcademicosDisponiveis(
 					ItemFiltroDto.builder()

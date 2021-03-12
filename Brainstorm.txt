@@ -1,0 +1,19 @@
+Um autor ou vários autores podem escrever um item de acervo (que pode ser livro, revista ou trabalho acadêmico. O autor pode atuar sendo autor ou editor. O item pode ter várias cópias em diferentes acervos ou ainda em um mesmo acervo.
+
+Um item de acervo deve ser publicado por, pelo menos, uma editora, podendo ser também por várias editoras. Caso não tenha uma editora, não pode gerar cópias do item, impossibilitando que esteja nos acervos.
+
+Um item de acervo pode ser emprestado a vários usuários, porém em períodos distintos, nunca ao mesmo espaço de tempo. Ao emprestar um item, é registrado a data de retirada e a data da qual o livro deverá ser devolvido, sem possibilidade de renovar caso o livro esteja reservado. Um item só poderá ser emprestado se estiver com o status “Disponível”. Ao emprestar um item, ele terá o status alterado para “Emprestado”.
+
+Ao emprestar um item de acervo, é enviado um email informando os dados básicos do empréstimo.
+
+Ao emprestar um item de acervo, é determinado uma data para devolução. O sistema deverá registrar as devoluções.
+
+Caso um item emprestado não seja devolvido até a data, será enviado outro email cobrando a devolução.
+
+Um item de acervo pode ser reservado a vários usuários, porém em períodos distintos, nunca no mesmo período. Um item só poderá ser reservado se estiver com o status “Disponível”. Ao reservar um item, ele terá o status alterado para “Reservado”.
+
+Ao reservar um item de acervo, é enviado um email informando os dados básicos da reserva.
+
+Ao reservar um item de acervo, é determinado uma data máxima para buscar o item. Caso não se cumpra, voltará para o status "Disponível".
+
+Um item de acervo pode ser destinado para consulta local, possuindo o status de “ConsultaLocal”. Esse não poderá ser emprestado nem reservado. Um item com status "Disponível" também pode ser usado para consulta local.
