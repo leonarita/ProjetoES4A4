@@ -1,7 +1,7 @@
 package br.com.ifsp.es4a4.projeto.model.pk;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -21,6 +21,6 @@ public class ReservaId implements Serializable {
 	
 	protected Long idUsuarioComum;
 
-	private Date dataReserva;
+	private Calendar dataReserva;
 
 }

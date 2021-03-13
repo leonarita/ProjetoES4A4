@@ -1,5 +1,6 @@
 package br.com.ifsp.es4a4.projeto.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -40,8 +41,8 @@ public class Reserva {
 	
 	@Id
 	@Column(name = "dt_data_reserva")
-	@Temporal(TemporalType.DATE)
-	private Date dataReserva;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dataReserva;
 
 	@Column(name = "dt_data_expiracao")
 	@Temporal(TemporalType.DATE)

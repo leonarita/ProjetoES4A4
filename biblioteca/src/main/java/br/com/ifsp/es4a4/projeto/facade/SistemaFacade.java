@@ -8,9 +8,11 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 
 import br.com.ifsp.es4a4.projeto.facade.factory.ItemsFactory;
+import br.com.ifsp.es4a4.projeto.model.Emprestimo;
 import br.com.ifsp.es4a4.projeto.model.Livro;
 import br.com.ifsp.es4a4.projeto.model.Revista;
 import br.com.ifsp.es4a4.projeto.model.TrabalhoAcademico;
+import br.com.ifsp.es4a4.projeto.model.abstracts.ItemAcervo;
 import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
 import br.com.ifsp.es4a4.projeto.repository.spec.LivroSpecRepository;
 import br.com.ifsp.es4a4.projeto.repository.spec.RevistaSpecRepository;
@@ -30,13 +32,12 @@ public class SistemaFacade {
 	
 	private final SenderEmail senderEmail;
 	private final UserSecurityService userSecurityService;
-	
+	private final ItemsFactory devolutionFactory;
+
 	private final LivroSpecRepository livroSpecRepository;
 	private final RevistaSpecRepository revistaSpecRepository;
 	private final TrabalhoAcademicoSpecRepository trabalhoAcademicoSpecRepository;
-	
-	private final ItemsFactory devolutionFactory;
-	
+		
 	public void emprestarItem(String Authorization, String tipoItem, ItemFiltroDto filtro) {
 
 	}
@@ -45,8 +46,12 @@ public class SistemaFacade {
 		
 	}
 	
-	public void devolverItemEmprestado(String authorization, String tipoItem, String codigoCatalogacao) {
-		devolutionFactory.realizarDevolucaoItem(userSecurityService.getIdByToken(authorization), tipoItem.toLowerCase(), codigoCatalogacao);
+	public Emprestimo pegarEmprestadoItemReservado(String authorization, String tipoItem, String name) {
+		return devolutionFactory.emprestarItemReservado(userSecurityService.getIdByToken(authorization), name, tipoItem);
+	}
+	
+	public ItemAcervo devolverItemEmprestado(String authorization, String tipoItem, String codigoCatalogacao) {
+		return devolutionFactory.realizarDevolucaoItem(userSecurityService.getIdByToken(authorization), tipoItem.toLowerCase(), codigoCatalogacao);
 	}
 	
 	public List<Livro> pegarLivrosDisponiveis(ItemFiltroDto filtro) {

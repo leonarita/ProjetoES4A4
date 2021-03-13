@@ -15,7 +15,7 @@ CREATE TABLE tb_editoras_items(
 
 CREATE TABLE tb_emprestimo (
 	dt_data_retirada timestamp,
-	dt_data_devoluticao_efetiva timestamp,
+	dt_data_devoluticao_efetiva date,
 	id_item_acervo int,
 	id_usuario_comum int,
 	bl_foi_devolvido boolean default false,
@@ -25,7 +25,7 @@ CREATE TABLE tb_emprestimo (
 
 CREATE TABLE tb_reserva (
 	dt_data_reserva timestamp,
-	dt_data_expiracao timestamp,
+	dt_data_expiracao date,
 	id_item_acervo int,
 	id_usuario_comum int,
 	bl_foi_retirado boolean default false,

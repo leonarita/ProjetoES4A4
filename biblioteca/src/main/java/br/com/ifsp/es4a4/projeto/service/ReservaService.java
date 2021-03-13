@@ -1,5 +1,6 @@
 package br.com.ifsp.es4a4.projeto.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,14 @@ public class ReservaService {
 	
 	public List<Reserva> findAllByExpirationDate(Date date) {
 		return this.reservaRepository.findAllByExpirationDate(date);
+	}
+	
+	public Integer updateByIds(Long idItemAcervo, Long idUsuarioComum, Calendar dataReserva) {
+		return this.reservaRepository.updateByIds(idItemAcervo, idUsuarioComum, dataReserva);
+	}
+	
+	public Reserva findByIdUserAndNameItem(Long idUsuarioComum, String nameItem) {
+		return this.reservaRepository.findByIdUserAndNameItem(idUsuarioComum, nameItem);
 	}
 
 }

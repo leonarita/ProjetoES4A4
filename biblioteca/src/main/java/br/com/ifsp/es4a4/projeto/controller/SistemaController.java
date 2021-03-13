@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifsp.es4a4.projeto.facade.ItemFiltroDto;
 import br.com.ifsp.es4a4.projeto.facade.SistemaFacade;
+import br.com.ifsp.es4a4.projeto.model.Emprestimo;
 import br.com.ifsp.es4a4.projeto.model.Livro;
 import br.com.ifsp.es4a4.projeto.model.Revista;
 import br.com.ifsp.es4a4.projeto.model.TrabalhoAcademico;
+import br.com.ifsp.es4a4.projeto.model.abstracts.ItemAcervo;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -36,9 +38,14 @@ public class SistemaController {
 
 	}
 	
+	@GetMapping("/emprestar/{item}/reservado")
+	public Emprestimo pegarEmprestadoItemReservado(@RequestHeader(name = "Authorization") String authorization, @PathVariable("item") String tipoItem, @RequestBody(required = false) String name) {
+		return this.sistemaFacade.pegarEmprestadoItemReservado(authorization, tipoItem, name);
+	}
+	
 	@GetMapping("/devolver/{item}/{codigoCatalogacao}")
-	public void devolverItemEmprestado(@RequestHeader(name = "Authorization") String authorization, @PathVariable("item") String tipoItem, @PathVariable("codigoCatalogacao") String codigoCatalogacao) {
-		this.sistemaFacade.devolverItemEmprestado(authorization, tipoItem, codigoCatalogacao);
+	public ItemAcervo devolverItemEmprestado(@RequestHeader(name = "Authorization") String authorization, @PathVariable("item") String tipoItem, @PathVariable("codigoCatalogacao") String codigoCatalogacao) {
+		return this.sistemaFacade.devolverItemEmprestado(authorization, tipoItem, codigoCatalogacao);
 	}
 	
 	@PostMapping("/item/livros/disponiveis")

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import br.com.ifsp.es4a4.projeto.facade.factory.clazz.LivroFactory;
 import br.com.ifsp.es4a4.projeto.facade.factory.clazz.RevistaFactory;
 import br.com.ifsp.es4a4.projeto.facade.factory.clazz.TrabalhoAcademicoFactory;
+import br.com.ifsp.es4a4.projeto.model.Emprestimo;
+import br.com.ifsp.es4a4.projeto.model.abstracts.ItemAcervo;
 import br.com.ifsp.es4a4.projeto.model.enumerations.TipoItemAcervo;
 import lombok.RequiredArgsConstructor;
 
@@ -16,17 +18,19 @@ public class ItemsFactory {
 	private final RevistaFactory revistaDevolucaoFactory;
 	private final TrabalhoAcademicoFactory trabalhoAcademicoDevolucaoFactory;
 	
-	public void realizarDevolucaoItem(Long idUser, String tipoItem, String codigoCatalogacao) {
+	public ItemAcervo realizarDevolucaoItem(Long idUser, String tipoItem, String codigoCatalogacao) {
 		
 		if(tipoItem.equals("livro")) {
-			livroDevolucaoFactory.devolverItem(idUser, codigoCatalogacao);
+			return livroDevolucaoFactory.devolverItem(idUser, codigoCatalogacao);
 		}
 		else if(tipoItem.equals("revista")) {
-			revistaDevolucaoFactory.devolverItem(idUser, codigoCatalogacao);
+			return revistaDevolucaoFactory.devolverItem(idUser, codigoCatalogacao);
 		}
 		else if(tipoItem.equals("trabalho-academico")) {
-			trabalhoAcademicoDevolucaoFactory.devolverItem(idUser, codigoCatalogacao);
+			return trabalhoAcademicoDevolucaoFactory.devolverItem(idUser, codigoCatalogacao);
 		}
+		
+		return null;
 	}
 	
 	public void normalizarItem(Long id, TipoItemAcervo tipoItem) {
@@ -40,6 +44,20 @@ public class ItemsFactory {
 		else if(tipoItem.equals(TipoItemAcervo.TRABALHO_ACADEMICO)) {
 			trabalhoAcademicoDevolucaoFactory.normalizarItem(id);
 		}
+	}
+	
+	public Emprestimo emprestarItemReservado(Long idUser, String name, String tipoItem) {
+		if(tipoItem.equals("livro")) {
+			return livroDevolucaoFactory.emprestarItemReservado(idUser, name);
+		}
+		else if(tipoItem.equals("revista")) {
+			return revistaDevolucaoFactory.emprestarItemReservado(idUser, name);
+		}
+		else if(tipoItem.equals("trabalho-academico")) {
+			return trabalhoAcademicoDevolucaoFactory.emprestarItemReservado(idUser, name);
+		}
+		
+		return null;
 	}
 
 }

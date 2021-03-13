@@ -1,5 +1,6 @@
 package br.com.ifsp.es4a4.projeto.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,10 @@ public class EmprestimoService {
 	
 	public List<Emprestimo> findAllByDevolutionDate(Date date) {
 		return this.emprestimoRepository.findAllByDevolutionDate(date);
+	}
+	
+	public Integer updateByIds(Long idItemAcervo, Long idUsuarioComum, Calendar dataRetirada) {
+		return this.emprestimoRepository.updateByIds(idItemAcervo, idUsuarioComum, dataRetirada);
 	}
 	
 	public Emprestimo findByIdsAndWasntReturned(Long idUsuarioComum, Long idItemAcervo) {

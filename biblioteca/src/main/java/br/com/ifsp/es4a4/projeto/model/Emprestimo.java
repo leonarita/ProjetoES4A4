@@ -1,5 +1,6 @@
 package br.com.ifsp.es4a4.projeto.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -32,8 +33,8 @@ public class Emprestimo {
 	
 	@Id
 	@Column(name = "dt_data_retirada")
-	@Temporal(TemporalType.DATE)
-	private Date dataRetirada;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dataRetirada;
 	
 	@Id
 	@Column(name = "id_item_acervo", nullable = false, updatable = false)

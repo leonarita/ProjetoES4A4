@@ -1,5 +1,6 @@
 package br.com.ifsp.es4a4.projeto.controller.crud;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,11 @@ public class EmprestimoController {
 	@PostMapping("/data-devolucao")
 	public List<Emprestimo> findAllByDevolutionDate(@RequestBody(required = false) Date date) {
 		return this.emprestimoService.findAllByDevolutionDate(date);
+	}
+	
+	@GetMapping("/update/{idUsuario}/{idItem}")
+	public Integer updateByIds(@PathVariable("idUsuario") Long idUsuarioComum, @PathVariable("idItem") Long idItemAcervo, @RequestBody(required = false) Calendar dataRetirada) {
+		return this.emprestimoService.updateByIds(idUsuarioComum, idItemAcervo, dataRetirada);
 	}
 	
 	@GetMapping("/{idUsuario}/{idItem}")
