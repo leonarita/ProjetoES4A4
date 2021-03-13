@@ -1,5 +1,6 @@
 package br.com.ifsp.es4a4.projeto.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class ReservaService {
 	
 	public Reserva create(Reserva reserva) {
 		return this.reservaRepository.save(reserva);
+	}
+	
+	public List<Reserva> findAllByExpirationDate(Date date) {
+		return this.reservaRepository.findAllByExpirationDate(date);
 	}
 
 }

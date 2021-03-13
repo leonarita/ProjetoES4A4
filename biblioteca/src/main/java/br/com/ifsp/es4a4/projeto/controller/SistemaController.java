@@ -3,6 +3,8 @@ package br.com.ifsp.es4a4.projeto.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -24,28 +26,19 @@ public class SistemaController {
 	
 	private final SistemaFacade sistemaFacade;
 	
-	public void emprestarItem(@RequestHeader String Authorization) {
+	@GetMapping("/emprestar/{item}")
+	public void emprestarItem(@RequestHeader String Authorization, @PathVariable("item") String tipoItem, @RequestBody(required = false) ItemFiltroDto filtro) {
 
 	}
 	
-	public void devolverItemEmprestado() {
-		
+	@GetMapping("/reservar/{item}")
+	public void reservarItem(@RequestHeader String Authorization, @PathVariable("item") String tipoItem, @RequestBody(required = false) ItemFiltroDto filtro) {
+
 	}
 	
-	public void reservarItem() {
-		
-	}
-	
-	public void validarItemReservadoNaoBuscado() {
-		
-	}
-	
-	public void pegarItemParaConsultaLocal() {
-		
-	}
-	
-	public void pegarItemPorFiltros() {
-		
+	@GetMapping("/devolver/{item}/{codigoCatalogacao}")
+	public void devolverItemEmprestado(@RequestHeader(name = "Authorization") String authorization, @PathVariable("item") String tipoItem, @PathVariable("codigoCatalogacao") String codigoCatalogacao) {
+		this.sistemaFacade.devolverItemEmprestado(authorization, tipoItem, codigoCatalogacao);
 	}
 	
 	@PostMapping("/item/livros/disponiveis")

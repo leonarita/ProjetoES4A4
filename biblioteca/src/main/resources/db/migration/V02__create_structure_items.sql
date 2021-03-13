@@ -17,6 +17,7 @@ CREATE TABLE tb_livro (
 	dt_data_publicacao date,
 	nr_situacao_item int NOT NULL,
 	id_acervo int,
+	id_tipo_item int NOT NULL,
 	
 	nr_edicao int,
 	st_isbn int NOT NULL
@@ -31,6 +32,7 @@ CREATE TABLE tb_revista (
 	dt_data_publicacao date,
 	nr_situacao_item int NOT NULL,
 	id_acervo int,
+	id_tipo_item int NOT NULL,
 	
 	nr_issn int,
 	nr_numero int,
@@ -46,6 +48,7 @@ CREATE TABLE tb_trabalho_academico (
 	dt_data_publicacao date,
 	nr_situacao_item int NOT NULL,
 	id_acervo int,
+	id_tipo_item int NOT NULL,
 	
 	dt_data_defesa date,
 	st_nome_curso varchar(50) NOT NULL,

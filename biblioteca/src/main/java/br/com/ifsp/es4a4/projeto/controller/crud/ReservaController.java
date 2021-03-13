@@ -1,5 +1,6 @@
 package br.com.ifsp.es4a4.projeto.controller.crud;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,6 +30,11 @@ public class ReservaController {
 	@PostMapping
 	public Reserva create(@RequestBody(required = false) Reserva reserva) {
 		return this.reservaService.create(reserva);
+	}
+	
+	@PostMapping("/data-expiracao")
+	public List<Reserva> findAllByExpirationDate(@RequestBody(required = false) Date date) {
+		return this.reservaService.findAllByExpirationDate(date);
 	}
 	
 }

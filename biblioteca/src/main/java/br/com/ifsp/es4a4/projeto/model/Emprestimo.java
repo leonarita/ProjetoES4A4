@@ -55,5 +55,7 @@ public class Emprestimo {
 	@JoinColumn(name = "id_usuario_comum", insertable = false, updatable = false)
 	private UsuarioComum usuarioComum;
 	
+	@Column(name = "bl_foi_devolvido")
+	private Boolean foiDevolvido;
 
 }

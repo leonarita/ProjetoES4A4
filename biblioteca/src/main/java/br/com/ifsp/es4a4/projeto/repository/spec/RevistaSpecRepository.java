@@ -1,7 +1,5 @@
 package br.com.ifsp.es4a4.projeto.repository.spec;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,14 +22,14 @@ public class RevistaSpecRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public List<Revista> findMaganizes(ItemFiltroDto filtro) {
+	public List<Revista> findMaganizes(ItemFiltroDto filtro, List<Situacao> situacoes) {
 		
 		String hql = "";
 		Map<String, Object> parameters = new HashMap<>();
 		
 		hql = hql.concat("select distinct(l) from Revista l ");
 		hql = hql.concat("where l.situacaoItem in (:situacaoDisponivel) ");
-		parameters.put("situacaoDisponivel", new ArrayList<Situacao>(Arrays.asList(Situacao.DISPONIVEL, Situacao.CONSULTA_LOCAL)));
+		parameters.put("situacaoDisponivel", situacoes);
 		
 		if(Objects.nonNull(filtro.getTitulo())) {
 			hql = hql.concat("and l.titulo like :titulo ");
@@ -66,6 +64,11 @@ public class RevistaSpecRepository {
 		if(Objects.nonNull(filtro.getVolume())) {
 			hql = hql.concat("and l.volume = :volume ");
 			parameters.put("volume", filtro.getVolume());
+		}
+		
+		if(Objects.nonNull(filtro.getCodigoCatalogacao())) {
+			hql = hql.concat("and l.codigoCatalogacao = :codigoCatalogacao ");
+			parameters.put("codigoCatalogacao", filtro.getCodigoCatalogacao());
 		}
 		
 		TypedQuery<Revista> query = entityManager.createQuery(hql, Revista.class);

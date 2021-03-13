@@ -18,6 +18,7 @@ CREATE TABLE tb_emprestimo (
 	dt_data_devoluticao_efetiva timestamp,
 	id_item_acervo int,
 	id_usuario_comum int,
+	bl_foi_devolvido boolean default false,
 	
 	PRIMARY KEY(id_item_acervo, id_usuario_comum, dt_data_retirada)
 );
@@ -27,6 +28,7 @@ CREATE TABLE tb_reserva (
 	dt_data_expiracao timestamp,
 	id_item_acervo int,
 	id_usuario_comum int,
+	bl_foi_retirado boolean default false,
 	
 	PRIMARY KEY(dt_data_reserva, id_item_acervo, id_usuario_comum)
 );

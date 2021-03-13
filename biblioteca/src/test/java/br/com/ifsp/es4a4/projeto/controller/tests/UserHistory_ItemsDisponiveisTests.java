@@ -33,7 +33,7 @@ public class UserHistory_ItemsDisponiveisTests {
 	@Test
 	@DisplayName("Busca de livros com base na massa de dados do Flyway")
 	void testarLivrosDisponiveis() {
-		assertThat(sistemaController.pegarLivrosDisponiveis(new ItemFiltroDto()).size()).isEqualTo(4);
+		assertThat(sistemaController.pegarLivrosDisponiveis(new ItemFiltroDto()).size()).isEqualTo(3);
 	}
 	
 	@Test

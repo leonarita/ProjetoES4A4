@@ -54,5 +54,8 @@ public class Reserva {
 	@ManyToOne
 	@JoinColumn(name = "id_usuario_comum", insertable = false, updatable = false)
 	private UsuarioComum usuarioComum;
+	
+	@Column(name = "bl_foi_retirado")
+	private Boolean foiRetirado;
 
 }

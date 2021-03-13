@@ -1,7 +1,5 @@
 package br.com.ifsp.es4a4.projeto.repository.spec;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,14 +22,14 @@ public class TrabalhoAcademicoSpecRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public List<TrabalhoAcademico> findWorks(ItemFiltroDto filtro) {
+	public List<TrabalhoAcademico> findWorks(ItemFiltroDto filtro, List<Situacao> situacoes) {
 		
 		String hql = "";
 		Map<String, Object> parameters = new HashMap<>();
 		
 		hql = hql.concat("select distinct(l) from TrabalhoAcademico l ");
 		hql = hql.concat("where l.situacaoItem in (:situacaoDisponivel) ");
-		parameters.put("situacaoDisponivel", new ArrayList<Situacao>(Arrays.asList(Situacao.DISPONIVEL, Situacao.CONSULTA_LOCAL)));
+		parameters.put("situacaoDisponivel", situacoes);
 		
 		if(Objects.nonNull(filtro.getTitulo())) {
 			hql = hql.concat("and l.titulo like :titulo ");
@@ -67,6 +65,11 @@ public class TrabalhoAcademicoSpecRepository {
 		if(Objects.nonNull(filtro.getTipoTrabalho())) {
 			hql = hql.concat("and l.tipoTrabalho = :tipoTrabalho ");
 			parameters.put("tipoTrabalho", filtro.getTipoTrabalho());
+		}
+		
+		if(Objects.nonNull(filtro.getCodigoCatalogacao())) {
+			hql = hql.concat("and l.codigoCatalogacao = :codigoCatalogacao ");
+			parameters.put("codigoCatalogacao", filtro.getCodigoCatalogacao());
 		}
 		
 		TypedQuery<TrabalhoAcademico> query = entityManager.createQuery(hql, TrabalhoAcademico.class);

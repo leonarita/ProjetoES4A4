@@ -27,6 +27,7 @@ import br.com.ifsp.es4a4.projeto.model.EditoraItem;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
 import br.com.ifsp.es4a4.projeto.model.Reserva;
 import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
+import br.com.ifsp.es4a4.projeto.model.enumerations.TipoItemAcervo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -68,6 +69,10 @@ public abstract class ItemAcervo {
 	@Convert(converter = Situacao.Converter.class)
 	@Column(name = "nr_situacao_item", nullable = false)
 	protected Situacao situacaoItem;
+	
+	@Column(name = "id_tipo_item", nullable = false)
+	@Convert(converter = TipoItemAcervo.Converter.class)
+	protected TipoItemAcervo tipoItem;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_acervo", insertable = false, updatable = false)

@@ -35,5 +35,7 @@ public class ItemFiltroDto {
 	private Date dataDefesa;
 	private String nomeCurso;
 	private TipoTrabalho tipoTrabalho;
+	
+	protected String codigoCatalogacao;
 
 }
