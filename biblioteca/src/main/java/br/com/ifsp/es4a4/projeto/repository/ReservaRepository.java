@@ -4,7 +4,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +22,13 @@ public interface ReservaRepository extends CrudRepository<Reserva, ReservaId>, J
 	@Query("select r from Reserva r where r.dataExpiracao = ?1")
 	List<Reserva> findAllByExpirationDate(Date date);
 	
+	@Modifying(clearAutomatically = true)
+	@Transactional
+	@Query("delete from Reserva r where r.idItemAcervo = :idItemAcervo and r.idUsuarioComum = :idUsuarioComum and r.dataReserva = :dataReserva")
+	Integer deleteById(@Param("idItemAcervo") Long idItemAcervo, @Param("idUsuarioComum") Long idUsuarioComum, @Param("dataReserva") Calendar dataReserva);
+	
+	@Modifying(clearAutomatically = true)
+	@Transactional
 	@Query("update Reserva r set r.foiRetirado = true where r.idItemAcervo = :idItemAcervo and r.idUsuarioComum = :idUsuarioComum and r.dataReserva = :dataReserva")
 	Integer updateByIds(@Param("idItemAcervo") Long idItemAcervo, @Param("idUsuarioComum") Long idUsuarioComum, @Param("dataReserva") Calendar dataReserva);
 	

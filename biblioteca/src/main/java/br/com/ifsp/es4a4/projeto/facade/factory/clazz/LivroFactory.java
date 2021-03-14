@@ -56,6 +56,7 @@ public class LivroFactory implements BaseFactory {
 				return livroController.create(livros.get(0));
 			}
 			
+			throw new NotFoundException("Empréstimo não encontrado com parâmetros informados");
 		}
 
 		throw new NotFoundException("Livro não encontrado com parâmetros informados");

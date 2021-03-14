@@ -56,6 +56,7 @@ public class TrabalhoAcademicoFactory implements BaseFactory {
 				return trabalhoAcademicoController.create(trabalhosAcademicos.get(0));
 			}
 			
+			throw new NotFoundException("Empréstimo não encontrado com parâmetros informados");
 		}
 
 		throw new NotFoundException("Trabalho Acadêmico não encontrado com parâmetros informados");

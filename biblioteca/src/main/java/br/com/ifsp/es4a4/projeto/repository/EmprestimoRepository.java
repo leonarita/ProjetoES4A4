@@ -24,6 +24,11 @@ public interface EmprestimoRepository extends CrudRepository<Emprestimo, Emprest
 	
 	@Modifying(clearAutomatically = true)
 	@Transactional
+	@Query("delete from Emprestimo e where e.idItemAcervo = :idItemAcervo and e.idUsuarioComum = :idUsuarioComum and e.dataRetirada = :dataRetirada")
+	Integer deleteById(@Param("idItemAcervo") Long idItemAcervo, @Param("idUsuarioComum") Long idUsuarioComum, @Param("dataRetirada") Calendar dataRetirada);
+	
+	@Modifying(clearAutomatically = true)
+	@Transactional
 	@Query("update Emprestimo e set e.foiDevolvido = true where e.idItemAcervo = :idItemAcervo and e.idUsuarioComum = :idUsuarioComum and e.dataRetirada = :dataRetirada")
 	Integer updateByIds(@Param("idItemAcervo") Long idItemAcervo, @Param("idUsuarioComum") Long idUsuarioComum, @Param("dataRetirada") Calendar dataRetirada);
 	

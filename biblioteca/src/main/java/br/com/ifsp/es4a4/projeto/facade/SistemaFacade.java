@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.ifsp.es4a4.projeto.facade.factory.ItemsFactory;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
 import br.com.ifsp.es4a4.projeto.model.Livro;
+import br.com.ifsp.es4a4.projeto.model.Reserva;
 import br.com.ifsp.es4a4.projeto.model.Revista;
 import br.com.ifsp.es4a4.projeto.model.TrabalhoAcademico;
 import br.com.ifsp.es4a4.projeto.model.abstracts.ItemAcervo;
@@ -38,12 +39,12 @@ public class SistemaFacade {
 	private final RevistaSpecRepository revistaSpecRepository;
 	private final TrabalhoAcademicoSpecRepository trabalhoAcademicoSpecRepository;
 		
-	public void emprestarItem(String Authorization, String tipoItem, ItemFiltroDto filtro) {
-
+	public Emprestimo emprestarItem(String Authorization, String tipoItem, ItemFiltroDto filtro) {
+		return null;
 	}
 	
-	public void reservarItem(String Authorization, String tipoItem, ItemFiltroDto filtro) {
-		
+	public Reserva reservarItem(String Authorization, String tipoItem, ItemFiltroDto filtro) {
+		return null;
 	}
 	
 	public Emprestimo pegarEmprestadoItemReservado(String authorization, String tipoItem, String name) {

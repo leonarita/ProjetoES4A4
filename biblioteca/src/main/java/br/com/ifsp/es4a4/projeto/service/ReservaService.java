@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import br.com.ifsp.es4a4.projeto.model.Reserva;
+import br.com.ifsp.es4a4.projeto.model.pk.ReservaId;
 import br.com.ifsp.es4a4.projeto.repository.ReservaRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +23,10 @@ public class ReservaService {
 	
 	public Reserva create(Reserva reserva) {
 		return this.reservaRepository.save(reserva);
+	}
+	
+	public Integer deleteById(ReservaId reservaId) {
+		return this.reservaRepository.deleteById(reservaId.getIdItemAcervo(), reservaId.getIdUsuarioComum(), reservaId.getDataReserva());
 	}
 	
 	public List<Reserva> findAllByExpirationDate(Date date) {

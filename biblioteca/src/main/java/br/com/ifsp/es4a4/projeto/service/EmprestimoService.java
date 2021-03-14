@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
+import br.com.ifsp.es4a4.projeto.model.pk.EmprestimoId;
 import br.com.ifsp.es4a4.projeto.repository.EmprestimoRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +23,10 @@ public class EmprestimoService {
 
 	public Emprestimo create(Emprestimo emprestimo) {
 		return this.emprestimoRepository.save(emprestimo);
+	}
+	
+	public Integer deleteById(EmprestimoId emprestimoId) {
+		return this.emprestimoRepository.deleteById(emprestimoId.getIdItemAcervo(), emprestimoId.getIdUsuarioComum(), emprestimoId.getDataRetirada());
 	}
 	
 	public List<Emprestimo> findAllByDevolutionDate(Date date) {

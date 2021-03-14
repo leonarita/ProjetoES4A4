@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
+import br.com.ifsp.es4a4.projeto.model.pk.EmprestimoId;
 import br.com.ifsp.es4a4.projeto.service.EmprestimoService;
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +34,11 @@ public class EmprestimoController {
 	@PostMapping
 	public Emprestimo create(@RequestBody(required = false) Emprestimo emprestimo) {
 		return this.emprestimoService.create(emprestimo);
+	}
+	
+	@DeleteMapping
+	public Integer deleteById(@RequestBody(required = false) EmprestimoId emprestimoId) {
+		return this.emprestimoService.deleteById(emprestimoId);
 	}
 	
 	@PostMapping("/data-devolucao")

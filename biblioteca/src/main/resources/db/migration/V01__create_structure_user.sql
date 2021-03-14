@@ -33,7 +33,7 @@ CREATE TABLE tb_usuario_comum (
 	dt_data_nascimento date,
 	
 	dt_data_cadastro date,
-	id_usuario integer NOT NULL
+	id_usuario integer
 );
 
 

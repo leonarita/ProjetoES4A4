@@ -56,6 +56,7 @@ public class RevistaFactory implements BaseFactory {
 				return revistaController.create(revistas.get(0));
 			}
 			
+			throw new NotFoundException("Empréstimo não encontrado com parâmetros informados");
 		}
 
 		throw new NotFoundException("Revista não encontrado com parâmetros informados");
