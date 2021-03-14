@@ -5,7 +5,7 @@
 É um projeto desenvolvido para a disciplina Engenharia de Software IV (ES4A4) de um sistema bibliotecário baseado no seguinte Diagrama de Classes (com algumas adaptações):
 
 <br>
-<img src="/Diagrama de Classes - Sistema Biblioteca.png">
+<img src="/.documents/Diagrama de Classes - Sistema Biblioteca.png">
 <br>
 
 - Em termos técnicos, é uma API que consiste em, basicamente, operações CRUD, realizar login e enviar email.
