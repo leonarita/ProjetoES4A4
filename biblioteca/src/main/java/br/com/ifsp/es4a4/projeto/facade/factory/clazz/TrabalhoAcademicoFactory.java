@@ -87,6 +87,7 @@ public class TrabalhoAcademicoFactory implements BaseFactory {
 						.idUsuarioComum(idUser)
 						.dataRetirada(Calendar.getInstance())
 						.dataDevolucaoEfetiva(DateFormat.addDays(new Date(), 7))
+						.foiDevolvido(false)
 						.build()
 			);
 		}

@@ -61,6 +61,19 @@ public class UserHistory_ItemsDisponiveisTests {
 		).get(0).getTitulo()).isEqualToIgnoringCase("harry potter");
 	}
 	
+	@Test
+	@DisplayName("Busca de livro não existente")
+	void testarLivrosNaoExistentes() {
+		assertThat(sistemaController.pegarLivrosDisponiveis(
+				ItemFiltroDto.builder()
+				.titulo("PHP")
+				.areaConhecimento(new ArrayList<String>(Arrays.asList("Aventura")))
+				.edicao((short)2)
+				.isbn((long)222)
+				.build()
+		)).isNullOrEmpty();
+	}
+	
 	
 	// REVISTAS
 	
@@ -92,6 +105,19 @@ public class UserHistory_ItemsDisponiveisTests {
 		).get(0).getCodigoCatalogacao()).isEqualTo("HAH359EJ");
 	}
 	
+	@Test
+	@DisplayName("Busca de revista não existente")
+	void testarRevistasNaoExistentes() {
+		assertThat(sistemaController.pegarRevistasDisponiveis(
+				ItemFiltroDto.builder()
+				.titulo("PHP")
+				.areaConhecimento(new ArrayList<String>(Arrays.asList("Aventura")))
+				.edicao((short)2)
+				.isbn((long)222)
+				.build()
+		)).isNullOrEmpty();
+	}
+	
 	
 	// TRABALHOS ACADÊMICOS
 	
@@ -120,6 +146,19 @@ public class UserHistory_ItemsDisponiveisTests {
 						.dataDefesa(formatter.parse("07/03/2021"))
 						.build()
 		).get(0).getCodigoCatalogacao()).isNotEmpty();
+	}
+	
+	@Test
+	@DisplayName("Busca de trabalhos acadêmicos não existente")
+	void testarTrabalhosAcademicosNaoExistentes() {
+		assertThat(sistemaController.pegarTrabalhosAcademicosDisponiveis(
+				ItemFiltroDto.builder()
+				.titulo("PHP")
+				.areaConhecimento(new ArrayList<String>(Arrays.asList("Aventura")))
+				.edicao((short)2)
+				.isbn((long)222)
+				.build()
+		)).isNullOrEmpty();
 	}
 
 }

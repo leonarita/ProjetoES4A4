@@ -13,7 +13,8 @@ INSERT INTO biblioteca.tb_livro
 VALUES
 (nextval('sq_item_acervo'), 'Star Wars', NULL, 'Ficção', 'A27TTKDH', now(), 1, 1, 111, 1,1 ),
 (nextval('sq_item_acervo'), 'Harry Potter', NULL, 'Aventura', 'D49YMNHE', now(), 1, 2, 222, 1, 1),
-(nextval('sq_item_acervo'), 'Senhor dos Anéis', NULL, 'Aventura', 'FFEA283F', now(), 1, 1, 333, 1, 1);
+(nextval('sq_item_acervo'), 'Senhor dos Anéis', NULL, 'Aventura', 'FFEA283F', now(), 1, 1, 333, 1, 1),
+(nextval('sq_item_acervo'), 'Batman', 'O Cavaleiro das Trevas', 'Aventura', 'ZECH25KE', now(), 3, 1, 444, 1, 1);
 
 INSERT INTO biblioteca.tb_revista
 (id_item_acervo, st_titulo, st_subtitulo, st_area_conhecimento, st_codigo_catalogacao, dt_data_publicacao, nr_situacao_item, nr_issn, nr_numero, nr_volume, id_acervo, id_tipo_item)
@@ -24,7 +25,8 @@ VALUES
 INSERT INTO biblioteca.tb_trabalho_academico
 (id_item_acervo, st_titulo, st_subtitulo, st_area_conhecimento, st_codigo_catalogacao, dt_data_publicacao, nr_situacao_item, dt_data_defesa, st_nome_curso, nr_tipo_trabalho, id_acervo, id_tipo_item)
 VALUES
-(nextval('sq_item_acervo'), 'TI Verde', NULL, 'Tecnologia da Informação', 'USH583KER', now(), 1, now(), 'DAHORA', 1, 3, 3);
+(nextval('sq_item_acervo'), 'TI Verde', NULL, 'Tecnologia da Informação', 'USH583KER', now(), 1, now(), 'DAHORA', 1, 3, 3),
+(nextval('sq_item_acervo'), 'Impactos da Tecnologia no Ambiente de Trabalho', 'Home Office', 'Tecnologia da Informação', 'DGCA3HU5K', now(), 4, now(), 'DAHORA', 1, 3, 3);
 
 
 
@@ -80,12 +82,12 @@ VALUES
 INSERT INTO biblioteca.tb_reserva
 (dt_data_reserva, dt_data_expiracao, id_item_acervo, id_usuario_comum)
 VALUES
-(now(), null, 1, 3);
+(now(), '2021-03-30', 8, 3);
 
 INSERT INTO biblioteca.tb_emprestimo
 (dt_data_retirada, dt_data_devoluticao_efetiva, id_item_acervo, id_usuario_comum)
 VALUES
-(now(), null, 1, 3);
+(now(), '2021-03-30', 4, 3);
 
 
 -- CRIANDO USUÁRIOS PARA LOGIN
