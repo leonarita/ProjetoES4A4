@@ -173,6 +173,8 @@ public class UserHistory_OperacoesBiblioteca_v2 {
 				() -> assertThat(emprestimo.getDataDevolucaoEfetiva()).isAfter(new Date()),
 				() -> assertFalse(emprestimo.getFoiDevolvido())
 		);
+		
+		emprestimoController.delete(emprestimo);
 	}
 
 }

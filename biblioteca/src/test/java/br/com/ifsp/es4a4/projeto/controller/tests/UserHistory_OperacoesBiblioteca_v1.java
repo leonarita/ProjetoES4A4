@@ -3,6 +3,7 @@ package br.com.ifsp.es4a4.projeto.controller.tests;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +23,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.ifsp.es4a4.projeto.controller.AuthenticationController;
 import br.com.ifsp.es4a4.projeto.controller.SistemaController;
+import br.com.ifsp.es4a4.projeto.controller.crud.EmprestimoController;
 import br.com.ifsp.es4a4.projeto.controller.crud.LivroController;
+import br.com.ifsp.es4a4.projeto.controller.crud.ReservaController;
 import br.com.ifsp.es4a4.projeto.controller.crud.TrabalhoAcademicoController;
 import br.com.ifsp.es4a4.projeto.facade.ItemFiltroDto;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
@@ -32,6 +35,7 @@ import br.com.ifsp.es4a4.projeto.model.TrabalhoAcademico;
 import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
 import br.com.ifsp.es4a4.projeto.model.enumerations.TipoItemAcervo;
 import br.com.ifsp.es4a4.projeto.model.enumerations.TipoTrabalho;
+import br.com.ifsp.es4a4.projeto.utils.exceptions.NotFoundException;
 import br.com.ifsp.es4a4.projeto.utils.jwt.DadosLogin;
 
 @SpringBootTest
@@ -53,6 +57,12 @@ public class UserHistory_OperacoesBiblioteca_v1 {
 	@Autowired
 	private TrabalhoAcademicoController trabalhoAcademicoController;
 	
+	@Autowired
+	private EmprestimoController emprestimoController;
+	
+	@Autowired
+	private ReservaController reservaController;
+	
 	Map<String, Long> idsValuesInserts = new HashMap<>();
 	private String token;
 	
@@ -67,7 +77,7 @@ public class UserHistory_OperacoesBiblioteca_v1 {
 					.areaConhecimento("Ação")
 					.codigoCatalogacao("EH63HS1I")
 					.dataPublicacao(new Date())
-					.situacaoItem(Situacao.EMPRESTADO)
+					.situacaoItem(Situacao.DISPONIVEL)
 					.edicao((short)1)
 					.isbn((long)555)
 					.idAcervo((long)1)
@@ -83,7 +93,7 @@ public class UserHistory_OperacoesBiblioteca_v1 {
 					.areaConhecimento("Tecnologia da Informação")
 					.codigoCatalogacao("DGCA3HU5K")
 					.dataPublicacao(new Date())
-					.situacaoItem(Situacao.RESERVADO)
+					.situacaoItem(Situacao.DISPONIVEL)
 					.idAcervo((long)1)
 					.tipoTrabalho(TipoTrabalho.DISSERTACAO)
 					.nomeCurso("ADS")
@@ -118,10 +128,28 @@ public class UserHistory_OperacoesBiblioteca_v1 {
 		assertAll(
 				() -> assertFalse(emprestimo.getFoiDevolvido()),
 				() -> assertThat(emprestimo.getDataDevolucaoEfetiva()).isAfter(new Date()),
-				() -> assertThat(emprestimo.getIdItemAcervo()).isEqualTo((long)3),
+				() -> assertThat(emprestimo.getIdItemAcervo()).isEqualTo(idsValuesInserts.get("idLivro")),
 				() -> assertThat(emprestimo.getItem().getSituacaoItem()).isIn(new ArrayList<>(Arrays.asList(Situacao.EMPRESTADO)))
 		);
+		
+		emprestimoController.delete(emprestimo);
 	}
+	
+	@Test
+	@DisplayName("Buscar tipo de item não existente para emprestar")
+	public void emprestarItemNaoListado() {
+		assertThat(this.sistemaController.emprestarItem(token, "dvd", ItemFiltroDto.builder().titulo("Homem-Aranha").build())).isNull();
+	}
+	
+	@Test
+	@DisplayName("Buscar tipo de item não encontrado no acervo para emprestar")
+	public void emprestarItemNaoEncontradoNoAcervo() {
+		assertThrows(
+				NotFoundException.class,
+				() -> this.sistemaController.emprestarItem(token, "livro", ItemFiltroDto.builder().titulo("ABCdário").build())
+		);
+	}
+	
 	
 	@Test
 	@DisplayName("Ao reservar um trabalho acadêmico, deverá mudar os status")
@@ -131,8 +159,25 @@ public class UserHistory_OperacoesBiblioteca_v1 {
 		assertAll(
 				() -> assertFalse(reserva.getFoiRetirado()),
 				() -> assertThat(reserva.getDataExpiracao()).isAfter(new Date()),
-				() -> assertThat(reserva.getIdItemAcervo()).isEqualTo((long)3),
+				() -> assertThat(reserva.getIdItemAcervo()).isEqualTo(idsValuesInserts.get("idTrabalhoAcademico")),
 				() -> assertThat(reserva.getItem().getSituacaoItem()).isIn(new ArrayList<>(Arrays.asList(Situacao.RESERVADO)))
+		);
+		
+		reservaController.delete(reserva);
+	}
+	
+	@Test
+	@DisplayName("Buscar tipo de item não existente para reservar")
+	public void reservarItemNaoListado() {
+		assertThat(this.sistemaController.reservarItem(token, "dvd", ItemFiltroDto.builder().titulo("Homem-Aranha").build())).isNull();
+	}
+	
+	@Test
+	@DisplayName("Buscar tipo de item não encontrado no acervo para reservar")
+	public void reservarItemNaoEncontradoNoAcervo() {
+		assertThrows(
+				NotFoundException.class,
+				() -> this.sistemaController.reservarItem(token, "livro", ItemFiltroDto.builder().titulo("Respostas para Universo").build())
 		);
 	}
 
