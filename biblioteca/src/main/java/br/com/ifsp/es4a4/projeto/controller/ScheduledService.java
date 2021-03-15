@@ -48,7 +48,7 @@ public class ScheduledService {
 						EmailDto.builder()
 							.recipientsTO(new ArrayList<>(Arrays.asList(emprestimo.getUsuarioComum().getUsuario().getEmail())))
 							.title("BIBLIOTECA IFSP: Devolução de Item marcado para hoje")
-							.msgHTML("O item '" + emprestimo.getItem().getTitulo() + "' da biblioteca do IFSP, retirado no dia " + simpleDateFormat.format(emprestimo.getDataRetirada()) + ", deve ser devolvido hoje!")
+							.msgHTML("O item '" + emprestimo.getItem().getTitulo() + "' da biblioteca do IFSP, retirado no dia " + simpleDateFormat.format(emprestimo.getDataRetirada().getTime()) + ", deve ser devolvido hoje!")
 							.build()
 				);
 			}

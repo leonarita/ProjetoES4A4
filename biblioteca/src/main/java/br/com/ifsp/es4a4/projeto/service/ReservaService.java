@@ -25,6 +25,10 @@ public class ReservaService {
 		return this.reservaRepository.save(reserva);
 	}
 	
+	public void delete(Reserva reserva) {
+		this.reservaRepository.delete(reserva);
+	}
+	
 	public Integer deleteById(ReservaId reservaId) {
 		return this.reservaRepository.deleteById(reservaId.getIdItemAcervo(), reservaId.getIdUsuarioComum(), reservaId.getDataReserva());
 	}

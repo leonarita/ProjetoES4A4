@@ -25,6 +25,10 @@ public class EmprestimoService {
 		return this.emprestimoRepository.save(emprestimo);
 	}
 	
+	public void delete(Emprestimo emprestimo) {
+		this.emprestimoRepository.delete(emprestimo);
+	}
+	
 	public Integer deleteById(EmprestimoId emprestimoId) {
 		return this.emprestimoRepository.deleteById(emprestimoId.getIdItemAcervo(), emprestimoId.getIdUsuarioComum(), emprestimoId.getDataRetirada());
 	}

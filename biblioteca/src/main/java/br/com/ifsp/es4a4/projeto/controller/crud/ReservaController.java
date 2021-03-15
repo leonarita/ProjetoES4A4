@@ -36,6 +36,11 @@ public class ReservaController {
 		return this.reservaService.create(reserva);
 	}
 	
+	@DeleteMapping("/body")
+	public void delete(@RequestBody(required = false) Reserva reserva) {
+		this.reservaService.create(reserva);
+	}
+	
 	@DeleteMapping
 	public Integer deleteById(@RequestBody(required = false) ReservaId reservaId) {
 		return this.reservaService.deleteById(reservaId);

@@ -36,6 +36,11 @@ public class EmprestimoController {
 		return this.emprestimoService.create(emprestimo);
 	}
 	
+	@DeleteMapping("/body")
+	public void delete(@RequestBody(required = false) Emprestimo emprestimo) {
+		this.emprestimoService.delete(emprestimo);
+	}
+	
 	@DeleteMapping
 	public Integer deleteById(@RequestBody(required = false) EmprestimoId emprestimoId) {
 		return this.emprestimoService.deleteById(emprestimoId);
