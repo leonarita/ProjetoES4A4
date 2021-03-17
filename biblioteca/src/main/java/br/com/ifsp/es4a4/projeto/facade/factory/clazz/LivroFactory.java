@@ -95,5 +95,57 @@ public class LivroFactory implements BaseFactory {
 		
 		throw new NotFoundException("Reserva não encontrada com parâmetros informados");
 	}
+	
+	@Override
+	public Emprestimo emprestarItem(Long idUser, ItemFiltroDto filtro) {
+		
+		List<Livro> livros = livroSpecRepository.findBooks(filtro, new ArrayList<Situacao>(Arrays.asList(Situacao.DISPONIVEL)));
+		
+		if(Objects.nonNull(livros) && livros.size() > 0) {
+			
+			Livro livro = livros.get(0);
+			livro.setSituacaoItem(Situacao.EMPRESTADO);
+			livroController.create(livro);
+			
+			return emprestimoController.create(
+					Emprestimo.builder()
+						.idItemAcervo(livro.getIdItemAcervo())
+						.idUsuarioComum(idUser)
+						.dataRetirada(Calendar.getInstance())
+						.dataDevolucaoEfetiva(DateFormat.addDays(new Date(), 7))
+						.item(livro)
+						.foiDevolvido(false)
+						.build()
+			);
+		}
+		
+		throw new NotFoundException("Livro não encontrado com parâmetros informados");
+	}
+	
+	@Override
+	public Reserva reservarItem(Long idUser, ItemFiltroDto filtro) {
+		
+		List<Livro> livros = livroSpecRepository.findBooks(filtro, new ArrayList<Situacao>(Arrays.asList(Situacao.DISPONIVEL)));
+		
+		if(Objects.nonNull(livros) && livros.size() > 0) {
+			
+			Livro livro = livros.get(0);
+			livro.setSituacaoItem(Situacao.RESERVADO);
+			livroController.create(livro);
+			
+			return reservaController.create(
+					Reserva.builder()
+						.idItemAcervo(livro.getIdItemAcervo())
+						.idUsuarioComum(idUser)
+						.dataReserva(Calendar.getInstance())
+						.dataExpiracao(DateFormat.addDays(new Date(), 7))
+						.item(livro)
+						.foiRetirado(false)
+						.build()
+			);
+		}
+		
+		throw new NotFoundException("Livro não encontrado com parâmetros informados");
+	}
 
 }

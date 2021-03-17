@@ -95,5 +95,57 @@ public class RevistaFactory implements BaseFactory {
 		
 		throw new NotFoundException("Reserva não encontrada com parâmetros informados");
 	}
+	
+	@Override
+	public Emprestimo emprestarItem(Long idUser, ItemFiltroDto filtro) {
+		
+		List<Revista> revistas = revistaSpecRepository.findMaganizes(filtro, new ArrayList<Situacao>(Arrays.asList(Situacao.DISPONIVEL)));
+		
+		if(Objects.nonNull(revistas) && revistas.size() > 0) {
+			
+			Revista revista = revistas.get(0);
+			revista.setSituacaoItem(Situacao.EMPRESTADO);
+			revistaController.create(revista);
+			
+			return emprestimoController.create(
+					Emprestimo.builder()
+						.idItemAcervo(revista.getIdItemAcervo())
+						.idUsuarioComum(idUser)
+						.dataRetirada(Calendar.getInstance())
+						.dataDevolucaoEfetiva(DateFormat.addDays(new Date(), 7))
+						.item(revista)
+						.foiDevolvido(false)
+						.build()
+			);
+		}
+		
+		throw new NotFoundException("Revista não encontrado com parâmetros informados");
+	}
+	
+	@Override
+	public Reserva reservarItem(Long idUser, ItemFiltroDto filtro) {
+		
+		List<Revista> revistas = revistaSpecRepository.findMaganizes(filtro, new ArrayList<Situacao>(Arrays.asList(Situacao.DISPONIVEL)));
+		
+		if(Objects.nonNull(revistas) && revistas.size() > 0) {
+			
+			Revista revista = revistas.get(0);
+			revista.setSituacaoItem(Situacao.RESERVADO);
+			revistaController.create(revista);
+			
+			return reservaController.create(
+					Reserva.builder()
+						.idItemAcervo(revista.getIdItemAcervo())
+						.idUsuarioComum(idUser)
+						.dataReserva(Calendar.getInstance())
+						.dataExpiracao(DateFormat.addDays(new Date(), 7))
+						.item(revista)
+						.foiRetirado(false)
+						.build()
+			);
+		}
+		
+		throw new NotFoundException("Revista não encontrado com parâmetros informados");
+	}
 
 }

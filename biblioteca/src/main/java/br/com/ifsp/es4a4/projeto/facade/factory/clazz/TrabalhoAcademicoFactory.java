@@ -95,5 +95,57 @@ public class TrabalhoAcademicoFactory implements BaseFactory {
 		
 		throw new NotFoundException("Reserva não encontrada com parâmetros informados");
 	}
+	
+	@Override
+	public Emprestimo emprestarItem(Long idUser, ItemFiltroDto filtro) {
+		
+		List<TrabalhoAcademico> trabalhos = trabalhoAcademicoSpecRepository.findWorks(filtro, new ArrayList<Situacao>(Arrays.asList(Situacao.DISPONIVEL)));
+		
+		if(Objects.nonNull(trabalhos) && trabalhos.size() > 0) {
+			
+			TrabalhoAcademico trabalho = trabalhos.get(0);
+			trabalho.setSituacaoItem(Situacao.EMPRESTADO);
+			trabalhoAcademicoController.create(trabalho);
+			
+			return emprestimoController.create(
+					Emprestimo.builder()
+						.idItemAcervo(trabalho.getIdItemAcervo())
+						.idUsuarioComum(idUser)
+						.dataRetirada(Calendar.getInstance())
+						.dataDevolucaoEfetiva(DateFormat.addDays(new Date(), 7))
+						.item(trabalho)
+						.foiDevolvido(false)
+						.build()
+			);
+		}
+		
+		throw new NotFoundException("Revista não encontrado com parâmetros informados");
+	}
+	
+	@Override
+	public Reserva reservarItem(Long idUser, ItemFiltroDto filtro) {
+		
+		List<TrabalhoAcademico> trabalhos = trabalhoAcademicoSpecRepository.findWorks(filtro, new ArrayList<Situacao>(Arrays.asList(Situacao.DISPONIVEL)));
+		
+		if(Objects.nonNull(trabalhos) && trabalhos.size() > 0) {
+			
+			TrabalhoAcademico trabalho = trabalhos.get(0);
+			trabalho.setSituacaoItem(Situacao.RESERVADO);
+			trabalhoAcademicoController.create(trabalho);
+			
+			return reservaController.create(
+					Reserva.builder()
+						.idItemAcervo(trabalho.getIdItemAcervo())
+						.idUsuarioComum(idUser)
+						.dataReserva(Calendar.getInstance())
+						.dataExpiracao(DateFormat.addDays(new Date(), 7))
+						.item(trabalho)
+						.foiRetirado(false)
+						.build()
+			);
+		}
+		
+		throw new NotFoundException("Revista não encontrado com parâmetros informados");
+	}
 
 }

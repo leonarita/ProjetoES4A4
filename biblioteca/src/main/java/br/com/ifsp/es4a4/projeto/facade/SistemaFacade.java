@@ -1,5 +1,6 @@
 package br.com.ifsp.es4a4.projeto.facade;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
+import br.com.ifsp.es4a4.projeto.controller.crud.UsuarioComumController;
 import br.com.ifsp.es4a4.projeto.facade.factory.ItemsFactory;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
 import br.com.ifsp.es4a4.projeto.model.Livro;
@@ -38,13 +40,49 @@ public class SistemaFacade {
 	private final LivroSpecRepository livroSpecRepository;
 	private final RevistaSpecRepository revistaSpecRepository;
 	private final TrabalhoAcademicoSpecRepository trabalhoAcademicoSpecRepository;
+	private final UsuarioComumController usuarioComumController;
+	
+	private final SimpleDateFormat FORMAT_TIMESTAMP_PT_BR = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	private final SimpleDateFormat FORMAT_DATE_PT_BR = new SimpleDateFormat("dd/MM/yyyy");
 		
 	public Emprestimo emprestarItem(String Authorization, String tipoItem, ItemFiltroDto filtro) {
-		return null;
+		
+		Long idUser = userSecurityService.getIdByToken(Authorization);
+		Emprestimo emprestimo = devolutionFactory.emprestarItem(idUser, tipoItem, filtro);
+		
+		if(Objects.nonNull(emprestimo)) {
+			emprestimo.setUsuarioComum(usuarioComumController.findAById(idUser));
+
+			sendEmail(
+				EmailDto.builder()
+					.recipientsTO(new ArrayList<>(Arrays.asList(emprestimo.getUsuarioComum().getUsuario().getEmail())))
+					.title("BIBLIOTECA IFSP: Empréstimo de item")
+					.msgHTML("O item '" + emprestimo.getItem().getTitulo() + "' da biblioteca do IFSP foi retirado hoje (" + FORMAT_TIMESTAMP_PT_BR.format(emprestimo.getDataRetirada().getTime()) + ") e deve ser devolvido no dia " + FORMAT_DATE_PT_BR.format(emprestimo.getDataDevolucaoEfetiva()) + "!")
+					.build()
+			);
+		}
+		
+		return emprestimo;
 	}
 	
 	public Reserva reservarItem(String Authorization, String tipoItem, ItemFiltroDto filtro) {
-		return null;
+
+		Long idUser = userSecurityService.getIdByToken(Authorization);
+		Reserva reserva = devolutionFactory.reservarItem(idUser, tipoItem, filtro);
+		
+		if(Objects.nonNull(reserva)) {
+			reserva.setUsuarioComum(usuarioComumController.findAById(idUser));
+
+			sendEmail(
+					EmailDto.builder()
+						.recipientsTO(new ArrayList<>(Arrays.asList(reserva.getUsuarioComum().getUsuario().getEmail())))
+						.title("BIBLIOTECA IFSP: Reserva de item")
+						.msgHTML("O item '" + reserva.getItem().getTitulo() + "' da biblioteca do IFSP foi reservado hoje (" + FORMAT_TIMESTAMP_PT_BR.format(reserva.getDataReserva().getTime()) + ") para ser retirado até dia " + FORMAT_DATE_PT_BR.format(reserva.getDataExpiracao()) + "!")
+						.build()
+				);
+		}
+		
+		return reserva;
 	}
 	
 	public Emprestimo pegarEmprestadoItemReservado(String authorization, String tipoItem, String name) {
