@@ -8,6 +8,10 @@
 <img src="/.documents/Diagrama de Classes - Sistema Biblioteca.png">
 <br>
 
+O projeto é predominantemente uma API REST, e possue também traços de API GraphQL.
+
+<br>
+
 - Em termos técnicos, é uma API que consiste em, basicamente, operações CRUD, realizar login e enviar email.
 - Em termos de negócio, é possível cadastrar items e usuários, realizar empréstimos, reservas e devoluções de item.
 - Ao que se refere à Engenharia de Software, inclui Engenharia de Requisitos, Metodologias Ágeis, Arquitetura, Design Patterns e Testes Automatizados.
@@ -49,13 +53,14 @@ As configurações de banco de dados (url, driver, username password) também es
 ## Tecnologias Utilizadas
 
 1. Spring Boot
-2. Spring Data
-3. Spring Security
-4. JPA
-5. JWT
-6. Nodemailer
-7. Flyway
-8. jUnit 5
+2. Spring GraphQL
+3. Spring Data
+4. Spring Security
+5. JPA
+6. JWT
+7. Javamailer
+8. Flyway
+9. jUnit 5
 
 <br>
 
