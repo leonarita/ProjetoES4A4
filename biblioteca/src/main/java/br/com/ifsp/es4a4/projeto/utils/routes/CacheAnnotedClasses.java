@@ -22,6 +22,9 @@ public class CacheAnnotedClasses {
 			classes.add(cl.getCanonicalName());
 		}
 		
+		classes.add("br.com.ifsp.es4a4.projeto.graphql.GraphQLController");
+		classes.add("com.oembedler.moon.graphiql.boot.GraphiQLController");
+		classes.add("graphql.kickstart.playground.boot.PlaygroundController");
 	}
 	
 	public boolean classHasAnonymousAnnotation(String clazz) {

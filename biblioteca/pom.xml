@@ -20,7 +20,8 @@
 		<java.version>11</java.version>
 		
 		<mail.version>1.4.7</mail.version>
-		<cucumber.version>1.2.0</cucumber.version>
+		<graphql-spring-boot.version>5.0.2</graphql-spring-boot.version>
+		<graphql.version>8.0.0</graphql.version>
 	</properties>
 
 	<dependencies>
@@ -99,11 +100,45 @@
 			<artifactId>reflections</artifactId>
 			<version>0.9.10</version>
 		</dependency>
+		
+		<!-- GraphQL -->
+		
+		<dependency>
+	      	<groupId>com.graphql-java-kickstart</groupId>
+	      	<artifactId>graphql-spring-boot-starter</artifactId>
+	      	<version>${graphql.version}</version>
+    	</dependency>
+    	
+    	<dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphiql-spring-boot-starter</artifactId>
+            <version>${graphql-spring-boot.version}</version>
+        </dependency>
+		
+		<dependency>
+	      	<groupId>com.graphql-java-kickstart</groupId>
+	      	<artifactId>playground-spring-boot-starter</artifactId>
+	      	<version>${graphql.version}</version>
+	      	<scope>runtime</scope>
+    	</dependency>
+    	
+    	<dependency>
+		    <groupId>com.graphql-java</groupId>
+		    <artifactId>graphql-spring-boot-starter-test</artifactId>
+		    <version>5.0.1</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.graphql-java</groupId>
+		    <artifactId>graphql-spring-boot-test-autoconfigure</artifactId>
+		    <version>5.0.2</version>
+		</dependency>
 
 	</dependencies>
 
 	<build>
 		<plugins>
+		
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -116,6 +151,12 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            
 		</plugins>
 	</build>
 

@@ -25,6 +25,9 @@ public class Interceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		
 		try {
+			if(request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingHandler").toString().startsWith("ResourceHttpRequestHandler")) {
+				return true;
+			}
 			
 			HandlerMethod handlerMethod = (HandlerMethod)request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingHandler");
 			
