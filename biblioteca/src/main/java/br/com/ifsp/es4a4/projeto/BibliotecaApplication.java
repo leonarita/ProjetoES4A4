@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import br.com.ifsp.es4a4.projeto.utils.files.StorageFile;
 import br.com.ifsp.es4a4.projeto.utils.mail.SmtpAuthenticator;
 
 @SpringBootApplication(exclude = { UserDetailsServiceAutoConfiguration.class })
@@ -31,6 +32,12 @@ public class BibliotecaApplication {
 	@Qualifier("mailer")
 	SmtpAuthenticator mailerAccount(@Value("${biblioteca.mail.username}") String username, @Value("${biblioteca.mail.password}") String password) {
 		return new SmtpAuthenticator(username, password);
+	}
+	
+	@Bean
+	@Qualifier("files")
+	StorageFile storageFile(@Value("${biblioteca.file.dir}") String path) {
+		return new StorageFile(path);
 	}
 
 }

@@ -11,11 +11,11 @@ import lombok.RequiredArgsConstructor;
 @Component
 public class ConfigInterceptor extends WebMvcConfigurerAdapter {
 	
-	private final Interceptor inperceptor;
+	private final Interceptor interceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(inperceptor);
+		registry.addInterceptor(interceptor);
 	}
 
 }
