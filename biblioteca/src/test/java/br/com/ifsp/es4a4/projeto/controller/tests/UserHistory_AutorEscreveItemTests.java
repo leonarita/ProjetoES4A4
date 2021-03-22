@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import br.com.ifsp.es4a4.projeto.controller.crud.AutoriaController;
 import br.com.ifsp.es4a4.projeto.controller.crud.LivroController;
 import br.com.ifsp.es4a4.projeto.controller.crud.RevistaController;
 import br.com.ifsp.es4a4.projeto.controller.crud.TrabalhoAcademicoController;
@@ -24,22 +25,25 @@ public class UserHistory_AutorEscreveItemTests {
 	@Autowired
 	private RevistaController revistaController;
 	
+	@Autowired
+	private AutoriaController autoriaController;
+	
 	@Test
 	@DisplayName("Buscar autores de todos os livros")
 	public void encontrarAutoresDosLivros() {
-		this.livroController.findAll().stream().forEach(livro -> assertTrue(livro.getAutorias() != null));
+		this.livroController.findAll().stream().forEach(livro -> assertTrue(autoriaController.findByIdItem(livro.getIdItemAcervo()) != null));
 	}
 	
 	@Test
 	@DisplayName("Buscar autores de todas as revistas")
 	public void encontrarAutoresDasRevistas() {
-		this.revistaController.findAll().stream().forEach(revista -> assertTrue(revista.getAutorias() != null));
+		this.revistaController.findAll().stream().forEach(revista -> assertTrue(autoriaController.findByIdItem(revista.getIdItemAcervo()) != null));
 	}
 	
 	@Test
 	@DisplayName("Buscar autores de todos os trabalhos acadêmicos")
 	public void encontrarAutoresDosTrabalhosAcademicos() {
-		this.trabalhoAcademicoController.findAll().stream().forEach(trabalhoAcademico -> assertTrue(trabalhoAcademico.getAutorias() != null));
+		this.trabalhoAcademicoController.findAll().stream().forEach(trabalhoAcademico -> assertTrue(autoriaController.findByIdItem(trabalhoAcademico.getIdItemAcervo()) != null));
 	}
 
 }

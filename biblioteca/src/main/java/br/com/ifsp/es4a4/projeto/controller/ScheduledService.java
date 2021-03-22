@@ -9,13 +9,13 @@ import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import br.com.ifsp.es4a4.projeto.controller.crud.EmprestimoController;
-import br.com.ifsp.es4a4.projeto.controller.crud.ReservaController;
 import br.com.ifsp.es4a4.projeto.facade.SistemaFacade;
 import br.com.ifsp.es4a4.projeto.facade.factory.ItemsFactory;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
 import br.com.ifsp.es4a4.projeto.model.Reserva;
 import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
+import br.com.ifsp.es4a4.projeto.service.EmprestimoService;
+import br.com.ifsp.es4a4.projeto.service.ReservaService;
 import br.com.ifsp.es4a4.projeto.utils.formatation.DateFormat;
 import br.com.ifsp.es4a4.projeto.utils.mail.EmailDto;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ public class ScheduledService {
 	
 	private final SistemaFacade sistemaFacade;
 	
-	private final EmprestimoController emprestimoController;
-	private final ReservaController reservaController;
+	private final EmprestimoService emprestimoService;
+	private final ReservaService reservaService;
 	
 	private final ItemsFactory devolutionFactory;
 	
@@ -38,7 +38,7 @@ public class ScheduledService {
 	@Scheduled(fixedRate = 1000 * 60 * 60 * 24, initialDelay = 1000)
 	public void enviarEmailsParaItemsCujaDataDevolucaoEhHoje() {
 		
-		List<Emprestimo> emprestimos = emprestimoController.findAllByDevolutionDate(new Date());
+		List<Emprestimo> emprestimos = emprestimoService.findAllByDevolutionDate(new Date());
 		
 		emprestimos.forEach(emprestimo -> {
 			
@@ -60,7 +60,7 @@ public class ScheduledService {
 	@Scheduled(fixedRate = 1000 * 60 * 60 * 24, initialDelay = 1000)
 	public void mudarStatusItensReservadosQueNaoForamRetirados() {
 		
-		List<Reserva> reservas = reservaController.findAllByExpirationDate(DateFormat.subtractDays(new Date(), 1));
+		List<Reserva> reservas = reservaService.findAllByExpirationDate(DateFormat.subtractDays(new Date(), 1));
 		
 		reservas.forEach(reserva -> {
 			

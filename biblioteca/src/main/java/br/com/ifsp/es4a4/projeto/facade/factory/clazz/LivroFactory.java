@@ -9,9 +9,6 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import br.com.ifsp.es4a4.projeto.controller.crud.EmprestimoController;
-import br.com.ifsp.es4a4.projeto.controller.crud.LivroController;
-import br.com.ifsp.es4a4.projeto.controller.crud.ReservaController;
 import br.com.ifsp.es4a4.projeto.facade.ItemFiltroDto;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
 import br.com.ifsp.es4a4.projeto.model.Livro;
@@ -19,6 +16,9 @@ import br.com.ifsp.es4a4.projeto.model.Reserva;
 import br.com.ifsp.es4a4.projeto.model.abstracts.ItemAcervo;
 import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
 import br.com.ifsp.es4a4.projeto.repository.spec.LivroSpecRepository;
+import br.com.ifsp.es4a4.projeto.service.EmprestimoService;
+import br.com.ifsp.es4a4.projeto.service.LivroService;
+import br.com.ifsp.es4a4.projeto.service.ReservaService;
 import br.com.ifsp.es4a4.projeto.utils.exceptions.NotFoundException;
 import br.com.ifsp.es4a4.projeto.utils.formatation.DateFormat;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +27,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LivroFactory implements BaseFactory {
 	
-	private final EmprestimoController emprestimoController;
-	private final ReservaController reservaController;
-	private final LivroController livroController;
+	private final EmprestimoService emprestimoService;
+	private final ReservaService reservaService;
+	private final LivroService livroService;
 	private final LivroSpecRepository livroSpecRepository;
 
 	@Override
@@ -42,7 +42,7 @@ public class LivroFactory implements BaseFactory {
 		
 		if(Objects.nonNull(livros) && livros.size() == 1) {
 			
-			Emprestimo emprestimo = emprestimoController.findByIdsAndWasntReturned(
+			Emprestimo emprestimo = emprestimoService.findByIdsAndWasntReturned(
 					idUser, 
 					livros.get(0).getIdItemAcervo()
 			);
@@ -50,10 +50,10 @@ public class LivroFactory implements BaseFactory {
 			if(Objects.nonNull(emprestimo)) {
 				
 				emprestimo.setFoiDevolvido(true);
-				emprestimoController.create(emprestimo);
+				emprestimoService.create(emprestimo);
 				
 				livros.get(0).setSituacaoItem(Situacao.DISPONIVEL);
-				return livroController.create(livros.get(0));
+				return livroService.create(livros.get(0));
 			}
 			
 			throw new NotFoundException("Empréstimo não encontrado com parâmetros informados");
@@ -64,25 +64,25 @@ public class LivroFactory implements BaseFactory {
 	
 	@Override
 	public void normalizarItem(Long id) {
-		Livro livro = livroController.findAById(id);
+		Livro livro = livroService.findById(id);
 		livro.setSituacaoItem(Situacao.DISPONIVEL);
-		livroController.create(livro);
+		livroService.create(livro);
 	}
 	
 	@Override
 	public Emprestimo emprestarItemReservado(Long idUser, String name) {
 		
-		Reserva reserva = reservaController.findByIdUserAndNameItem(idUser, name);
+		Reserva reserva = reservaService.findByIdUserAndNameItem(idUser, name);
 		
 		if(Objects.nonNull(reserva)) {
 			reserva.setFoiRetirado(true);
-			reservaController.create(reserva);
+			reservaService.create(reserva);
 			
-			Livro livro = livroController.findAById(reserva.getIdItemAcervo());
+			Livro livro = livroService.findById(reserva.getIdItemAcervo());
 			livro.setSituacaoItem(Situacao.EMPRESTADO);
-			livroController.create(livro);
+			livroService.create(livro);
 			
-			return emprestimoController.create(
+			return emprestimoService.create(
 					Emprestimo.builder()
 						.idItemAcervo(reserva.getIdItemAcervo())
 						.idUsuarioComum(idUser)
@@ -105,9 +105,9 @@ public class LivroFactory implements BaseFactory {
 			
 			Livro livro = livros.get(0);
 			livro.setSituacaoItem(Situacao.EMPRESTADO);
-			livroController.create(livro);
+			livroService.create(livro);
 			
-			return emprestimoController.create(
+			return emprestimoService.create(
 					Emprestimo.builder()
 						.idItemAcervo(livro.getIdItemAcervo())
 						.idUsuarioComum(idUser)
@@ -131,9 +131,9 @@ public class LivroFactory implements BaseFactory {
 			
 			Livro livro = livros.get(0);
 			livro.setSituacaoItem(Situacao.RESERVADO);
-			livroController.create(livro);
+			livroService.create(livro);
 			
-			return reservaController.create(
+			return reservaService.create(
 					Reserva.builder()
 						.idItemAcervo(livro.getIdItemAcervo())
 						.idUsuarioComum(idUser)

@@ -21,14 +21,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.ifsp.es4a4.projeto.controller.AuthenticationController;
 import br.com.ifsp.es4a4.projeto.controller.SistemaController;
+import br.com.ifsp.es4a4.projeto.controller.crud.AcervoController;
 import br.com.ifsp.es4a4.projeto.controller.crud.EmprestimoController;
 import br.com.ifsp.es4a4.projeto.controller.crud.LivroController;
 import br.com.ifsp.es4a4.projeto.controller.crud.ReservaController;
 import br.com.ifsp.es4a4.projeto.controller.crud.TrabalhoAcademicoController;
+import br.com.ifsp.es4a4.projeto.controller.crud.UsuarioComumController;
+import br.com.ifsp.es4a4.projeto.controller.dto.EmprestimoDto;
+import br.com.ifsp.es4a4.projeto.controller.dto.LivroDto;
+import br.com.ifsp.es4a4.projeto.controller.dto.ReservaDto;
+import br.com.ifsp.es4a4.projeto.controller.dto.TrabalhoAcademicoDto;
+import br.com.ifsp.es4a4.projeto.controller.mapper.EmprestimoMapper;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
-import br.com.ifsp.es4a4.projeto.model.Livro;
-import br.com.ifsp.es4a4.projeto.model.Reserva;
-import br.com.ifsp.es4a4.projeto.model.TrabalhoAcademico;
 import br.com.ifsp.es4a4.projeto.model.abstracts.ItemAcervo;
 import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
 import br.com.ifsp.es4a4.projeto.model.enumerations.TipoItemAcervo;
@@ -37,6 +41,7 @@ import br.com.ifsp.es4a4.projeto.model.pk.EmprestimoId;
 import br.com.ifsp.es4a4.projeto.model.pk.ReservaId;
 import br.com.ifsp.es4a4.projeto.utils.formatation.DateFormat;
 import br.com.ifsp.es4a4.projeto.utils.jwt.DadosLogin;
+import br.com.ifsp.es4a4.projeto.utils.jwt.service.UserSecurityService;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -52,6 +57,9 @@ public class UserHistory_OperacoesBiblioteca_v2 {
 	private AuthenticationController authenticationController;
 	
 	@Autowired
+	private UserSecurityService userSecurityService;
+	
+	@Autowired
 	private LivroController livroController;
 	
 	@Autowired
@@ -61,7 +69,13 @@ public class UserHistory_OperacoesBiblioteca_v2 {
 	private EmprestimoController emprestimoController;
 	
 	@Autowired
+	private AcervoController acervoController;
+	
+	@Autowired
 	private ReservaController reservaController;
+	
+	@Autowired
+	private UsuarioComumController usuarioComumController;
 	
 	Map<String, Long> idsValuesInserts = new HashMap<>();
 	private final Calendar cal = Calendar.getInstance();
@@ -70,10 +84,10 @@ public class UserHistory_OperacoesBiblioteca_v2 {
 	@BeforeAll
 	public void setup() {
 		
-		// JdbcTemplate
+		token = authenticationController.autenticar(new DadosLogin("leo@gmail.com", "123")).getBody().getToken();
 		
 		idsValuesInserts.put("idLivro", livroController.create(
-				Livro.builder()
+				LivroDto.builder()
 					.titulo("Homem-Aranha")
 					.areaConhecimento("Ação")
 					.codigoCatalogacao("EH63HS1I")
@@ -83,22 +97,25 @@ public class UserHistory_OperacoesBiblioteca_v2 {
 					.isbn((long)555)
 					.idAcervo((long)1)
 					.tipoItem(TipoItemAcervo.LIVRO)
+					.acervo(acervoController.findById((long)1))
 					.build()
 				).getIdItemAcervo()
 		);
 		
 		emprestimoController.create(
-				Emprestimo.builder()
+				EmprestimoDto.builder()
 					.idItemAcervo((Long)idsValuesInserts.get("idLivro"))
-					.idUsuarioComum((long)3)
+					.idUsuarioComum(userSecurityService.getIdByToken(token))
 					.dataRetirada(cal)
 					.dataDevolucaoEfetiva(DateFormat.addDays(new Date(), 7))
 					.foiDevolvido(false)
+					.usuarioComum(usuarioComumController.findById(userSecurityService.getIdByToken(token)))
+					.item(livroController.findById(idsValuesInserts.get("idLivro")))
 					.build()
 		);
 		
 		idsValuesInserts.put("idTrabalhoAcademico", trabalhoAcademicoController.create(
-				TrabalhoAcademico.builder()
+				TrabalhoAcademicoDto.builder()
 					.titulo("Impactos da Tecnologia no Ambiente de Trabalho")
 					.subtitulo("Home Office")
 					.areaConhecimento("Tecnologia da Informação")
@@ -110,17 +127,20 @@ public class UserHistory_OperacoesBiblioteca_v2 {
 					.nomeCurso("ADS")
 					.dataDefesa(new Date())
 					.tipoItem(TipoItemAcervo.TRABALHO_ACADEMICO)
+					.acervo(acervoController.findById((long)1))
 					.build()
 				).getIdItemAcervo()
 		);
 		
 		reservaController.create(
-					Reserva.builder()
+					ReservaDto.builder()
 					.idItemAcervo((Long)idsValuesInserts.get("idTrabalhoAcademico"))
-					.idUsuarioComum((long)3)
+					.idUsuarioComum(userSecurityService.getIdByToken(token))
 					.dataReserva(cal)
 					.dataExpiracao(DateFormat.addDays(new Date(), 7))
 					.foiRetirado(false)
+					.usuarioComum(usuarioComumController.findById(userSecurityService.getIdByToken(token)))
+					.item(livroController.findById(idsValuesInserts.get("idTrabalhoAcademico")))
 					.build()
 		);
 	}
@@ -174,7 +194,7 @@ public class UserHistory_OperacoesBiblioteca_v2 {
 				() -> assertFalse(emprestimo.getFoiDevolvido())
 		);
 		
-		emprestimoController.delete(emprestimo);
+		emprestimoController.delete(EmprestimoMapper.entityToDto(emprestimo));
 	}
 
 }

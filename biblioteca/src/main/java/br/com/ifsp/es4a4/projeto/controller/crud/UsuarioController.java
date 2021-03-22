@@ -1,6 +1,7 @@
 package br.com.ifsp.es4a4.projeto.controller.crud;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifsp.es4a4.projeto.model.Usuario;
+import br.com.ifsp.es4a4.projeto.controller.dto.UsuarioDto;
+import br.com.ifsp.es4a4.projeto.controller.mapper.UsuarioMapper;
 import br.com.ifsp.es4a4.projeto.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 
@@ -25,24 +27,24 @@ public class UsuarioController {
 	private final UsuarioService usuarioService;
 
 	@GetMapping
-	public List<Usuario> findAll() {
-		return this.usuarioService.findAll();
+	public List<UsuarioDto> findAll() {
+		return this.usuarioService.findAll().stream().map(UsuarioMapper::entityToDto).collect(Collectors.toList());
 	}
 
 	@GetMapping("/{id}")
-	public Usuario findAById(@PathVariable Long id) {
-		return this.usuarioService.findById(id);
+	public UsuarioDto findById(@PathVariable Long id) {
+		return UsuarioMapper.entityToDto(this.usuarioService.findById(id));
 	}
 	
 	@PostMapping
-	public Usuario create(@RequestBody(required = false) Usuario usuario) {
-		return this.usuarioService.save(usuario);
+	public UsuarioDto create(@RequestBody(required = false) UsuarioDto usuario) {
+		return UsuarioMapper.entityToDto(this.usuarioService.save(UsuarioMapper.dtoToEntity(usuario)));
 	}
 	
 	@PutMapping("/{idUsuario}")
-	public Usuario update(@PathVariable Long idUsuario, @RequestBody(required = false) Usuario usuario) {
+	public UsuarioDto update(@PathVariable Long idUsuario, @RequestBody(required = false) UsuarioDto usuario) {
 		usuario.setIdUsuario(idUsuario);
-		return this.usuarioService.save(usuario);
+		return UsuarioMapper.entityToDto(this.usuarioService.save(UsuarioMapper.dtoToEntity(usuario)));
 	}
 	
 	@DeleteMapping("/{id}")

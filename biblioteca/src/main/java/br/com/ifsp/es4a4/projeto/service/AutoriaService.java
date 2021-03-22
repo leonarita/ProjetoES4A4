@@ -18,6 +18,10 @@ public class AutoriaService {
 		return this.autoriaRepository.findAll();
 	}
 	
+	public List<Autoria> findByIdItem(Long idItem) {
+		return this.autoriaRepository.findByIdItem(idItem);
+	}
+	
 	public Autoria create(Autoria autoria) {
 		return this.autoriaRepository.save(autoria);
 	}

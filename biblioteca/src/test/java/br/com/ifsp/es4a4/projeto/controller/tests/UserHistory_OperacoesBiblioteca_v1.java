@@ -23,15 +23,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.ifsp.es4a4.projeto.controller.AuthenticationController;
 import br.com.ifsp.es4a4.projeto.controller.SistemaController;
+import br.com.ifsp.es4a4.projeto.controller.crud.AcervoController;
 import br.com.ifsp.es4a4.projeto.controller.crud.EmprestimoController;
 import br.com.ifsp.es4a4.projeto.controller.crud.LivroController;
 import br.com.ifsp.es4a4.projeto.controller.crud.ReservaController;
 import br.com.ifsp.es4a4.projeto.controller.crud.TrabalhoAcademicoController;
+import br.com.ifsp.es4a4.projeto.controller.dto.LivroDto;
+import br.com.ifsp.es4a4.projeto.controller.dto.TrabalhoAcademicoDto;
+import br.com.ifsp.es4a4.projeto.controller.mapper.EmprestimoMapper;
+import br.com.ifsp.es4a4.projeto.controller.mapper.ReservaMapper;
 import br.com.ifsp.es4a4.projeto.facade.ItemFiltroDto;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
-import br.com.ifsp.es4a4.projeto.model.Livro;
 import br.com.ifsp.es4a4.projeto.model.Reserva;
-import br.com.ifsp.es4a4.projeto.model.TrabalhoAcademico;
 import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
 import br.com.ifsp.es4a4.projeto.model.enumerations.TipoItemAcervo;
 import br.com.ifsp.es4a4.projeto.model.enumerations.TipoTrabalho;
@@ -63,6 +66,9 @@ public class UserHistory_OperacoesBiblioteca_v1 {
 	@Autowired
 	private ReservaController reservaController;
 	
+	@Autowired
+	private AcervoController acervoController;
+	
 	Map<String, Long> idsValuesInserts = new HashMap<>();
 	private String token;
 	
@@ -72,7 +78,7 @@ public class UserHistory_OperacoesBiblioteca_v1 {
 		// JdbcTemplate
 		
 		idsValuesInserts.put("idLivro", livroController.create(
-				Livro.builder()
+				LivroDto.builder()
 					.titulo("Homem-Aranha")
 					.areaConhecimento("Ação")
 					.codigoCatalogacao("EH63HS1I")
@@ -82,12 +88,13 @@ public class UserHistory_OperacoesBiblioteca_v1 {
 					.isbn((long)555)
 					.idAcervo((long)1)
 					.tipoItem(TipoItemAcervo.LIVRO)
+					.acervo(acervoController.findById((long)1))
 					.build()
 				).getIdItemAcervo()
 		);
 		
 		idsValuesInserts.put("idTrabalhoAcademico", trabalhoAcademicoController.create(
-				TrabalhoAcademico.builder()
+				TrabalhoAcademicoDto.builder()
 					.titulo("Impactos da Tecnologia no Ambiente de Trabalho")
 					.subtitulo("Home Office")
 					.areaConhecimento("Tecnologia da Informação")
@@ -99,6 +106,7 @@ public class UserHistory_OperacoesBiblioteca_v1 {
 					.nomeCurso("ADS")
 					.dataDefesa(new Date())
 					.tipoItem(TipoItemAcervo.TRABALHO_ACADEMICO)
+					.acervo(acervoController.findById((long)1))
 					.build()
 				).getIdItemAcervo()
 		);
@@ -132,7 +140,7 @@ public class UserHistory_OperacoesBiblioteca_v1 {
 				() -> assertThat(emprestimo.getItem().getSituacaoItem()).isIn(new ArrayList<>(Arrays.asList(Situacao.EMPRESTADO)))
 		);
 		
-		emprestimoController.delete(emprestimo);
+		emprestimoController.delete(EmprestimoMapper.entityToDto(emprestimo));
 	}
 	
 	@Test
@@ -163,7 +171,7 @@ public class UserHistory_OperacoesBiblioteca_v1 {
 				() -> assertThat(reserva.getItem().getSituacaoItem()).isIn(new ArrayList<>(Arrays.asList(Situacao.RESERVADO)))
 		);
 		
-		reservaController.delete(reserva);
+		reservaController.delete(ReservaMapper.entityToDto(reserva));
 	}
 	
 	@Test

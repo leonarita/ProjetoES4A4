@@ -1,6 +1,7 @@
 package br.com.ifsp.es4a4.projeto.controller.crud;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifsp.es4a4.projeto.model.Revista;
+import br.com.ifsp.es4a4.projeto.controller.dto.RevistaDto;
+import br.com.ifsp.es4a4.projeto.controller.mapper.RevistaMapper;
 import br.com.ifsp.es4a4.projeto.service.RevistaService;
 import lombok.RequiredArgsConstructor;
 
@@ -25,24 +27,24 @@ public class RevistaController {
 	private final RevistaService revistaService;
 
 	@GetMapping
-	public List<Revista> findAll() {
-		return this.revistaService.findAll();
+	public List<RevistaDto> findAll() {
+		return this.revistaService.findAll().stream().map(RevistaMapper::entityToDto).collect(Collectors.toList());
 	}
 
 	@GetMapping("/{id}")
-	public Revista findAById(@PathVariable Long id) {
-		return this.revistaService.findById(id);
+	public RevistaDto findById(@PathVariable Long id) {
+		return RevistaMapper.entityToDto(this.revistaService.findById(id));
 	}
 	
 	@PostMapping
-	public Revista create(@RequestBody(required = false) Revista revista) {
-		return this.revistaService.create(revista);
+	public RevistaDto create(@RequestBody(required = false) RevistaDto revista) {
+		return RevistaMapper.entityToDto(this.revistaService.create(RevistaMapper.dtoToEntity(revista)));
 	}
 	
 	@PutMapping
-	public Revista update(@PathVariable Long id, @RequestBody(required = false) Revista revista) {
+	public RevistaDto update(@PathVariable Long id, @RequestBody(required = false) RevistaDto revista) {
 		revista.setIdAcervo(id);
-		return this.revistaService.create(revista);
+		return RevistaMapper.entityToDto(this.revistaService.create(RevistaMapper.dtoToEntity(revista)));
 	}
 	
 	@DeleteMapping("/{id}")

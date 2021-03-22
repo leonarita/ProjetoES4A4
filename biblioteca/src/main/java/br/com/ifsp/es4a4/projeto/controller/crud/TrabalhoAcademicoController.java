@@ -1,6 +1,7 @@
 package br.com.ifsp.es4a4.projeto.controller.crud;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifsp.es4a4.projeto.model.TrabalhoAcademico;
+import br.com.ifsp.es4a4.projeto.controller.dto.TrabalhoAcademicoDto;
+import br.com.ifsp.es4a4.projeto.controller.mapper.TrabalhoAcademicoMapper;
 import br.com.ifsp.es4a4.projeto.service.TrabalhoAcademicoService;
 import lombok.RequiredArgsConstructor;
 
@@ -25,24 +27,24 @@ public class TrabalhoAcademicoController {
 	private final TrabalhoAcademicoService trabalhoAcademicoService;
 
 	@GetMapping
-	public List<TrabalhoAcademico> findAll() {
-		return this.trabalhoAcademicoService.findAll();
+	public List<TrabalhoAcademicoDto> findAll() {
+		return this.trabalhoAcademicoService.findAll().stream().map(TrabalhoAcademicoMapper::entityToDto).collect(Collectors.toList());
 	}
 
 	@GetMapping("/{id}")
-	public TrabalhoAcademico findAById(@PathVariable Long id) {
-		return this.trabalhoAcademicoService.findById(id);
+	public TrabalhoAcademicoDto findById(@PathVariable Long id) {
+		return TrabalhoAcademicoMapper.entityToDto(this.trabalhoAcademicoService.findById(id));
 	}
 	
 	@PostMapping
-	public TrabalhoAcademico create(@RequestBody(required = false) TrabalhoAcademico trabalhoAcademico) {
-		return this.trabalhoAcademicoService.create(trabalhoAcademico);
+	public TrabalhoAcademicoDto create(@RequestBody(required = false) TrabalhoAcademicoDto trabalhoAcademico) {
+		return TrabalhoAcademicoMapper.entityToDto(this.trabalhoAcademicoService.create(TrabalhoAcademicoMapper.dtoToEntity(trabalhoAcademico)));
 	}
 	
 	@PutMapping("/{id}")
-	public TrabalhoAcademico update(@PathVariable Long id, @RequestBody(required = false) TrabalhoAcademico trabalhoAcademico) {
+	public TrabalhoAcademicoDto update(@PathVariable Long id, @RequestBody(required = false) TrabalhoAcademicoDto trabalhoAcademico) {
 		trabalhoAcademico.setIdAcervo(id);
-		return this.trabalhoAcademicoService.create(trabalhoAcademico);
+		return TrabalhoAcademicoMapper.entityToDto(this.trabalhoAcademicoService.create(TrabalhoAcademicoMapper.dtoToEntity(trabalhoAcademico)));
 	}
 	
 	@DeleteMapping("/{id}")

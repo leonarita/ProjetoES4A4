@@ -1,6 +1,7 @@
 package br.com.ifsp.es4a4.projeto.controller.crud;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifsp.es4a4.projeto.model.Autor;
+import br.com.ifsp.es4a4.projeto.controller.dto.AutorDto;
+import br.com.ifsp.es4a4.projeto.controller.mapper.AutorMapper;
 import br.com.ifsp.es4a4.projeto.service.AutorService;
 import lombok.RequiredArgsConstructor;
 
@@ -25,24 +27,24 @@ public class AutorController {
 	private final AutorService autorService;
 	
 	@GetMapping
-	public List<Autor> findAll() {
-		return this.autorService.findAll();
+	public List<AutorDto> findAll() {
+		return this.autorService.findAll().stream().map(AutorMapper::entityToDto).collect(Collectors.toList());
 	}
 	
 	@GetMapping("/{id}")
-	public Autor findAById(@PathVariable Long id) {
-		return this.autorService.findById(id);
+	public AutorDto findById(@PathVariable Long id) {
+		return AutorMapper.entityToDto(this.autorService.findById(id));
 	}
 	
 	@PostMapping
-	public Autor create(@RequestBody(required = false) Autor autor) {
-		return this.autorService.create(autor);
+	public AutorDto create(@RequestBody(required = false) AutorDto autor) {
+		return AutorMapper.entityToDto(this.autorService.create(AutorMapper.dtoToEntity(autor)));
 	}
 	
 	@PutMapping("/{id}")
-	public Autor update(@PathVariable Long id, @RequestBody(required = false) Autor autor) {
+	public AutorDto update(@PathVariable Long id, @RequestBody(required = false) AutorDto autor) {
 		autor.setIdPessoa(id);
-		return this.autorService.create(autor);
+		return AutorMapper.entityToDto(this.autorService.create(AutorMapper.dtoToEntity(autor)));
 	}
 	
 	@DeleteMapping("/{id}")

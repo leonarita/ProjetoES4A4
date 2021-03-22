@@ -1,6 +1,7 @@
 package br.com.ifsp.es4a4.projeto.controller.crud;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifsp.es4a4.projeto.model.UsuarioComum;
+import br.com.ifsp.es4a4.projeto.controller.dto.UsuarioComumDto;
+import br.com.ifsp.es4a4.projeto.controller.mapper.UsuarioComumMapper;
 import br.com.ifsp.es4a4.projeto.service.UsuarioComumService;
 import lombok.RequiredArgsConstructor;
 
@@ -25,24 +27,24 @@ public class UsuarioComumController {
 	private final UsuarioComumService usuarioComumService;
 
 	@GetMapping
-	public List<UsuarioComum> findAll() {
-		return this.usuarioComumService.findAll();
+	public List<UsuarioComumDto> findAll() {
+		return this.usuarioComumService.findAll().stream().map(UsuarioComumMapper::entityToDto).collect(Collectors.toList());
 	}
 
 	@GetMapping("/{id}")
-	public UsuarioComum findAById(@PathVariable Long id) {
-		return this.usuarioComumService.findById(id);
+	public UsuarioComumDto findById(@PathVariable Long id) {
+		return UsuarioComumMapper.entityToDto(this.usuarioComumService.findById(id));
 	}
 	
 	@PostMapping
-	public UsuarioComum create(@RequestBody(required = false) UsuarioComum usuarioComum) {
-		return this.usuarioComumService.create(usuarioComum);
+	public UsuarioComumDto create(@RequestBody(required = false) UsuarioComumDto usuarioComum) {
+		return UsuarioComumMapper.entityToDto(this.usuarioComumService.create(UsuarioComumMapper.dtoToEntity(usuarioComum)));
 	}
 	
 	@PutMapping("/{id}")
-	public UsuarioComum update(@PathVariable Long id, @RequestBody(required = false) UsuarioComum usuarioComum) {
+	public UsuarioComumDto update(@PathVariable Long id, @RequestBody(required = false) UsuarioComumDto usuarioComum) {
 		usuarioComum.setIdPessoa(id);
-		return this.usuarioComumService.create(usuarioComum);
+		return UsuarioComumMapper.entityToDto(this.usuarioComumService.create(UsuarioComumMapper.dtoToEntity(usuarioComum)));
 	}
 	
 	@DeleteMapping("/{id}")

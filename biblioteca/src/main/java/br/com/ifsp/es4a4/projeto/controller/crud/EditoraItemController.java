@@ -1,6 +1,7 @@
 package br.com.ifsp.es4a4.projeto.controller.crud;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifsp.es4a4.projeto.model.EditoraItem;
+import br.com.ifsp.es4a4.projeto.controller.dto.EditoraItemDto;
+import br.com.ifsp.es4a4.projeto.controller.mapper.EditoraItemMapper;
 import br.com.ifsp.es4a4.projeto.service.EditoraItemService;
 import lombok.RequiredArgsConstructor;
 
@@ -22,13 +24,13 @@ public class EditoraItemController {
 	private final EditoraItemService editoraItemService;
 	
 	@GetMapping
-	public List<EditoraItem> findAll() {
-		return this.editoraItemService.findAll();
+	public List<EditoraItemDto> findAll() {
+		return this.editoraItemService.findAll().stream().map(EditoraItemMapper::entityToDto).collect(Collectors.toList());
 	}
 	
 	@PostMapping
-	public EditoraItem create(@RequestBody(required = false) EditoraItem editoraItem) {
-		return this.editoraItemService.create(editoraItem);
+	public EditoraItemDto create(@RequestBody(required = false) EditoraItemDto editoraItem) {
+		return EditoraItemMapper.entityToDto(this.editoraItemService.create(EditoraItemMapper.dtoToEntity(editoraItem)));
 	}
 	
 }

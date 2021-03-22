@@ -1,6 +1,7 @@
 package br.com.ifsp.es4a4.projeto.controller.crud;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifsp.es4a4.projeto.model.Acervo;
+import br.com.ifsp.es4a4.projeto.controller.dto.AcervoDto;
+import br.com.ifsp.es4a4.projeto.controller.mapper.AcervoMapper;
 import br.com.ifsp.es4a4.projeto.service.AcervoService;
 import lombok.RequiredArgsConstructor;
 
@@ -25,24 +27,24 @@ public class AcervoController {
 	private final AcervoService acervoService;
 	
 	@GetMapping
-	public List<Acervo> findAll() {
-		return this.acervoService.findAll();
+	public List<AcervoDto> findAll() {
+		return this.acervoService.findAll().stream().map(AcervoMapper::entityToDto).collect(Collectors.toList());
 	}
 	
 	@GetMapping("/{id}")
-	public Acervo findAById(@PathVariable Long id) {
-		return this.acervoService.findById(id);
+	public AcervoDto findById(@PathVariable Long id) {
+		return AcervoMapper.entityToDto(this.acervoService.findById(id));
 	}
 	
 	@PostMapping
-	public Acervo create(@RequestBody(required = false) Acervo acervo) {
-		return this.acervoService.create(acervo);
+	public AcervoDto create(@RequestBody(required = false) AcervoDto acervo) {
+		return AcervoMapper.entityToDto(this.acervoService.create(AcervoMapper.dtoToEntity(acervo)));
 	}
 	
 	@PutMapping("/{id}")
-	public Acervo update(@PathVariable Long id, @RequestBody(required = false) Acervo acervo) {
+	public AcervoDto update(@PathVariable Long id, @RequestBody(required = false) AcervoDto acervo) {
 		acervo.setId(id);
-		return this.acervoService.create(acervo);
+		return AcervoMapper.entityToDto(this.acervoService.create(AcervoMapper.dtoToEntity(acervo)));
 	}
 	
 	@DeleteMapping("/{id}")

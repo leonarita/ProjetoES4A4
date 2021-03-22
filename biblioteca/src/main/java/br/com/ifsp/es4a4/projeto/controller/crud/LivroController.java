@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ifsp.es4a4.projeto.controller.dto.LivroDto;
+import br.com.ifsp.es4a4.projeto.controller.mapper.LivroMapper;
 import br.com.ifsp.es4a4.projeto.facade.ItemFiltroDto;
-import br.com.ifsp.es4a4.projeto.model.Livro;
 import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
 import br.com.ifsp.es4a4.projeto.repository.spec.LivroSpecRepository;
 import br.com.ifsp.es4a4.projeto.service.LivroService;
@@ -35,43 +37,38 @@ public class LivroController {
 	private final LivroSpecRepository livroSpecRepository;
 
 	@GetMapping
-	public List<Livro> findAll() {
-		return this.livroService.findAll();
+	public List<LivroDto> findAll() {
+		return this.livroService.findAll().stream().map(LivroMapper::entityToDto).collect(Collectors.toList());
 	}
 
 	@GetMapping("/{id}")
-	public Livro findAById(@PathVariable Long id) {
-		return this.livroService.findById(id);
+	public LivroDto findById(@PathVariable Long id) {
+		return LivroMapper.entityToDto(this.livroService.findById(id));
 	}
 	
 	@GetMapping("/parametros")
-	public List<Livro> findByParameters(@RequestParam(required = false) String title) {
+	public List<LivroDto> findByParameters(@RequestParam(required = false) String title) {
 		return this.livroSpecRepository.findBooks(
 				Objects.isNull(title) ? ItemFiltroDto.builder().build() : ItemFiltroDto.builder().titulo(title).build(), 
 				new ArrayList<>(Arrays.asList(Situacao.DISPONIVEL, Situacao.CONSULTA_LOCAL, Situacao.EMPRESTADO, Situacao.RESERVADO))
-		);
+		).stream().map(LivroMapper::entityToDto).collect(Collectors.toList());
 	}
 	
 	@PostMapping
-	public Livro create(@RequestBody(required = false) Livro livro) {
-		
-		if(Objects.isNull(livro.getSituacaoItem())) {
-			livro.setSituacaoItem(Situacao.DISPONIVEL);
-		}
-		
-		return this.livroService.create(livro);
+	public LivroDto create(@RequestBody(required = false) LivroDto livro) {
+		return LivroMapper.entityToDto(this.livroService.create(LivroMapper.dtoToEntity(livro)));
 	}
 	
 	@PutMapping("/{id}")
-	public Livro update(@PathVariable("id") Long id, @RequestBody(required = false) Livro livro) {
+	public LivroDto update(@PathVariable("id") Long id, @RequestBody(required = false) LivroDto livro) {
 		livro.setIdAcervo(id);
-		return this.livroService.create(livro);
+		return LivroMapper.entityToDto(this.livroService.create(LivroMapper.dtoToEntity(livro)));
 	}
 	
 	@DeleteMapping("/{id}")
-	public Livro deleteById(@PathVariable("id") Long id) {
+	public LivroDto deleteById(@PathVariable("id") Long id) {
 		this.livroService.deleteById(id);
-		return new Livro();
+		return new LivroDto();
 	}
 
 }

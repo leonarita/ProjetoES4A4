@@ -9,9 +9,6 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import br.com.ifsp.es4a4.projeto.controller.crud.EmprestimoController;
-import br.com.ifsp.es4a4.projeto.controller.crud.ReservaController;
-import br.com.ifsp.es4a4.projeto.controller.crud.RevistaController;
 import br.com.ifsp.es4a4.projeto.facade.ItemFiltroDto;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
 import br.com.ifsp.es4a4.projeto.model.Reserva;
@@ -19,6 +16,9 @@ import br.com.ifsp.es4a4.projeto.model.Revista;
 import br.com.ifsp.es4a4.projeto.model.abstracts.ItemAcervo;
 import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
 import br.com.ifsp.es4a4.projeto.repository.spec.RevistaSpecRepository;
+import br.com.ifsp.es4a4.projeto.service.EmprestimoService;
+import br.com.ifsp.es4a4.projeto.service.ReservaService;
+import br.com.ifsp.es4a4.projeto.service.RevistaService;
 import br.com.ifsp.es4a4.projeto.utils.exceptions.NotFoundException;
 import br.com.ifsp.es4a4.projeto.utils.formatation.DateFormat;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +27,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RevistaFactory implements BaseFactory {
 	
-	private final EmprestimoController emprestimoController;
-	private final ReservaController reservaController;
-	private final RevistaController revistaController;
+	private final EmprestimoService emprestimoService;
+	private final ReservaService reservaService;
+	private final RevistaService revistaService;
 	private final RevistaSpecRepository revistaSpecRepository;
 
 	@Override
@@ -42,7 +42,7 @@ public class RevistaFactory implements BaseFactory {
 		
 		if(Objects.nonNull(revistas) && revistas.size() == 1) {
 			
-			Emprestimo emprestimo = emprestimoController.findByIdsAndWasntReturned(
+			Emprestimo emprestimo = emprestimoService.findByIdsAndWasntReturned(
 					idUser, 
 					revistas.get(0).getIdItemAcervo()
 			);
@@ -50,10 +50,10 @@ public class RevistaFactory implements BaseFactory {
 			if(Objects.nonNull(emprestimo)) {
 				
 				emprestimo.setFoiDevolvido(true);
-				emprestimoController.create(emprestimo);
+				emprestimoService.create(emprestimo);
 				
 				revistas.get(0).setSituacaoItem(Situacao.DISPONIVEL);
-				return revistaController.create(revistas.get(0));
+				return revistaService.create(revistas.get(0));
 			}
 			
 			throw new NotFoundException("Empréstimo não encontrado com parâmetros informados");
@@ -64,25 +64,25 @@ public class RevistaFactory implements BaseFactory {
 	
 	@Override
 	public void normalizarItem(Long id) {
-		Revista revista = revistaController.findAById(id);
+		Revista revista = revistaService.findById(id);
 		revista.setSituacaoItem(Situacao.DISPONIVEL);
-		revistaController.create(revista);
+		revistaService.create(revista);
 	}
 
 	@Override
 	public Emprestimo emprestarItemReservado(Long idUser, String name) {
 		
-		Reserva reserva = reservaController.findByIdUserAndNameItem(idUser, name);
+		Reserva reserva = reservaService.findByIdUserAndNameItem(idUser, name);
 		
 		if(Objects.nonNull(reserva)) {
 			reserva.setFoiRetirado(true);
-			reservaController.create(reserva);
+			reservaService.create(reserva);
 			
-			Revista revista = revistaController.findAById(reserva.getIdItemAcervo());
+			Revista revista = revistaService.findById(reserva.getIdItemAcervo());
 			revista.setSituacaoItem(Situacao.EMPRESTADO);
-			revistaController.create(revista);
+			revistaService.create(revista);
 			
-			return emprestimoController.create(
+			return emprestimoService.create(
 					Emprestimo.builder()
 						.idItemAcervo(reserva.getIdItemAcervo())
 						.idUsuarioComum(idUser)
@@ -105,9 +105,9 @@ public class RevistaFactory implements BaseFactory {
 			
 			Revista revista = revistas.get(0);
 			revista.setSituacaoItem(Situacao.EMPRESTADO);
-			revistaController.create(revista);
+			revistaService.create(revista);
 			
-			return emprestimoController.create(
+			return emprestimoService.create(
 					Emprestimo.builder()
 						.idItemAcervo(revista.getIdItemAcervo())
 						.idUsuarioComum(idUser)
@@ -131,9 +131,9 @@ public class RevistaFactory implements BaseFactory {
 			
 			Revista revista = revistas.get(0);
 			revista.setSituacaoItem(Situacao.RESERVADO);
-			revistaController.create(revista);
+			revistaService.create(revista);
 			
-			return reservaController.create(
+			return reservaService.create(
 					Reserva.builder()
 						.idItemAcervo(revista.getIdItemAcervo())
 						.idUsuarioComum(idUser)

@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import br.com.ifsp.es4a4.projeto.controller.crud.UsuarioComumController;
 import br.com.ifsp.es4a4.projeto.facade.factory.ItemsFactory;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
 import br.com.ifsp.es4a4.projeto.model.Livro;
@@ -20,6 +19,7 @@ import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
 import br.com.ifsp.es4a4.projeto.repository.spec.LivroSpecRepository;
 import br.com.ifsp.es4a4.projeto.repository.spec.RevistaSpecRepository;
 import br.com.ifsp.es4a4.projeto.repository.spec.TrabalhoAcademicoSpecRepository;
+import br.com.ifsp.es4a4.projeto.service.UsuarioComumService;
 import br.com.ifsp.es4a4.projeto.utils.exceptions.InvalidBodyEmailException;
 import br.com.ifsp.es4a4.projeto.utils.exceptions.InvalidRecipientException;
 import br.com.ifsp.es4a4.projeto.utils.jwt.service.UserSecurityService;
@@ -40,7 +40,7 @@ public class SistemaFacade {
 	private final LivroSpecRepository livroSpecRepository;
 	private final RevistaSpecRepository revistaSpecRepository;
 	private final TrabalhoAcademicoSpecRepository trabalhoAcademicoSpecRepository;
-	private final UsuarioComumController usuarioComumController;
+	private final UsuarioComumService usuarioComumService;
 	
 	private final SimpleDateFormat FORMAT_TIMESTAMP_PT_BR = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	private final SimpleDateFormat FORMAT_DATE_PT_BR = new SimpleDateFormat("dd/MM/yyyy");
@@ -51,7 +51,7 @@ public class SistemaFacade {
 		Emprestimo emprestimo = devolutionFactory.emprestarItem(idUser, tipoItem, filtro);
 		
 		if(Objects.nonNull(emprestimo)) {
-			emprestimo.setUsuarioComum(usuarioComumController.findAById(idUser));
+			emprestimo.setUsuarioComum(usuarioComumService.findById(idUser));
 
 			sendEmail(
 				EmailDto.builder()
@@ -71,7 +71,7 @@ public class SistemaFacade {
 		Reserva reserva = devolutionFactory.reservarItem(idUser, tipoItem, filtro);
 		
 		if(Objects.nonNull(reserva)) {
-			reserva.setUsuarioComum(usuarioComumController.findAById(idUser));
+			reserva.setUsuarioComum(usuarioComumService.findById(idUser));
 
 			sendEmail(
 					EmailDto.builder()

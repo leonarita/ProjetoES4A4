@@ -9,9 +9,6 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import br.com.ifsp.es4a4.projeto.controller.crud.EmprestimoController;
-import br.com.ifsp.es4a4.projeto.controller.crud.ReservaController;
-import br.com.ifsp.es4a4.projeto.controller.crud.TrabalhoAcademicoController;
 import br.com.ifsp.es4a4.projeto.facade.ItemFiltroDto;
 import br.com.ifsp.es4a4.projeto.model.Emprestimo;
 import br.com.ifsp.es4a4.projeto.model.Reserva;
@@ -19,6 +16,9 @@ import br.com.ifsp.es4a4.projeto.model.TrabalhoAcademico;
 import br.com.ifsp.es4a4.projeto.model.abstracts.ItemAcervo;
 import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
 import br.com.ifsp.es4a4.projeto.repository.spec.TrabalhoAcademicoSpecRepository;
+import br.com.ifsp.es4a4.projeto.service.EmprestimoService;
+import br.com.ifsp.es4a4.projeto.service.ReservaService;
+import br.com.ifsp.es4a4.projeto.service.TrabalhoAcademicoService;
 import br.com.ifsp.es4a4.projeto.utils.exceptions.NotFoundException;
 import br.com.ifsp.es4a4.projeto.utils.formatation.DateFormat;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +27,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TrabalhoAcademicoFactory implements BaseFactory {
 	
-	private final EmprestimoController emprestimoController;
-	private final ReservaController reservaController;
-	private final TrabalhoAcademicoController trabalhoAcademicoController;
+	private final EmprestimoService emprestimoService;
+	private final ReservaService reservaService;
+	private final TrabalhoAcademicoService trabalhoAcademicoService;
 	private final TrabalhoAcademicoSpecRepository trabalhoAcademicoSpecRepository;
 	
 	@Override
@@ -42,7 +42,7 @@ public class TrabalhoAcademicoFactory implements BaseFactory {
 		
 		if(Objects.nonNull(trabalhosAcademicos) && trabalhosAcademicos.size() == 1) {
 			
-			Emprestimo emprestimo = emprestimoController.findByIdsAndWasntReturned(
+			Emprestimo emprestimo = emprestimoService.findByIdsAndWasntReturned(
 					idUser, 
 					trabalhosAcademicos.get(0).getIdItemAcervo()
 			);
@@ -50,10 +50,10 @@ public class TrabalhoAcademicoFactory implements BaseFactory {
 			if(Objects.nonNull(emprestimo)) {
 				
 				emprestimo.setFoiDevolvido(true);
-				emprestimoController.create(emprestimo);
+				emprestimoService.create(emprestimo);
 				
 				trabalhosAcademicos.get(0).setSituacaoItem(Situacao.DISPONIVEL);
-				return trabalhoAcademicoController.create(trabalhosAcademicos.get(0));
+				return trabalhoAcademicoService.create(trabalhosAcademicos.get(0));
 			}
 			
 			throw new NotFoundException("Empréstimo não encontrado com parâmetros informados");
@@ -64,25 +64,25 @@ public class TrabalhoAcademicoFactory implements BaseFactory {
 	
 	@Override
 	public void normalizarItem(Long id) {
-		TrabalhoAcademico trabalhoAcademico = trabalhoAcademicoController.findAById(id);
+		TrabalhoAcademico trabalhoAcademico = trabalhoAcademicoService.findById(id);
 		trabalhoAcademico.setSituacaoItem(Situacao.DISPONIVEL);
-		trabalhoAcademicoController.create(trabalhoAcademico);
+		trabalhoAcademicoService.create(trabalhoAcademico);
 	}
 	
 	@Override
 	public Emprestimo emprestarItemReservado(Long idUser, String name) {
 		
-		Reserva reserva = reservaController.findByIdUserAndNameItem(idUser, name);
+		Reserva reserva = reservaService.findByIdUserAndNameItem(idUser, name);
 		
 		if(Objects.nonNull(reserva)) {
 			reserva.setFoiRetirado(true);
-			reservaController.create(reserva);
+			reservaService.create(reserva);
 			
-			TrabalhoAcademico trabalhoAcademico = trabalhoAcademicoController.findAById(reserva.getIdItemAcervo());
+			TrabalhoAcademico trabalhoAcademico = trabalhoAcademicoService.findById(reserva.getIdItemAcervo());
 			trabalhoAcademico.setSituacaoItem(Situacao.EMPRESTADO);
-			trabalhoAcademicoController.create(trabalhoAcademico);
+			trabalhoAcademicoService.create(trabalhoAcademico);
 			
-			return emprestimoController.create(
+			return emprestimoService.create(
 					Emprestimo.builder()
 						.idItemAcervo(reserva.getIdItemAcervo())
 						.idUsuarioComum(idUser)
@@ -105,9 +105,9 @@ public class TrabalhoAcademicoFactory implements BaseFactory {
 			
 			TrabalhoAcademico trabalho = trabalhos.get(0);
 			trabalho.setSituacaoItem(Situacao.EMPRESTADO);
-			trabalhoAcademicoController.create(trabalho);
+			trabalhoAcademicoService.create(trabalho);
 			
-			return emprestimoController.create(
+			return emprestimoService.create(
 					Emprestimo.builder()
 						.idItemAcervo(trabalho.getIdItemAcervo())
 						.idUsuarioComum(idUser)
@@ -131,9 +131,9 @@ public class TrabalhoAcademicoFactory implements BaseFactory {
 			
 			TrabalhoAcademico trabalho = trabalhos.get(0);
 			trabalho.setSituacaoItem(Situacao.RESERVADO);
-			trabalhoAcademicoController.create(trabalho);
+			trabalhoAcademicoService.create(trabalho);
 			
-			return reservaController.create(
+			return reservaService.create(
 					Reserva.builder()
 						.idItemAcervo(trabalho.getIdItemAcervo())
 						.idUsuarioComum(idUser)
