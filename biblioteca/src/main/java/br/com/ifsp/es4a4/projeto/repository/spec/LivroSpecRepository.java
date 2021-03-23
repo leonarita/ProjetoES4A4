@@ -32,8 +32,8 @@ public class LivroSpecRepository {
 		parameters.put("situacaoDisponivel", situacoes);
 		
 		if(Objects.nonNull(filtro.getTitulo())) {
-			hql = hql.concat("and l.titulo like :titulo ");
-			parameters.put("titulo", "%" + filtro.getTitulo() + "%");
+			hql = hql.concat("and UPPER(l.titulo) like :titulo ");
+			parameters.put("titulo", "%" + filtro.getTitulo().toUpperCase() + "%");
 		}
 		if(Objects.nonNull(filtro.getSubtitulo())) {
 			hql = hql.concat("and l.subtitulo like :subtitulo ");
