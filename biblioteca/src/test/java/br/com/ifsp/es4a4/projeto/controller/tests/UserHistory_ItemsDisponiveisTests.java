@@ -1,6 +1,7 @@
 package br.com.ifsp.es4a4.projeto.controller.tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.ifsp.es4a4.projeto.controller.SistemaController;
+import br.com.ifsp.es4a4.projeto.controller.crud.LivroController;
 import br.com.ifsp.es4a4.projeto.facade.ItemFiltroDto;
 import br.com.ifsp.es4a4.projeto.model.enumerations.TipoTrabalho;
 
@@ -25,6 +27,9 @@ public class UserHistory_ItemsDisponiveisTests {
 	@Autowired
 	private SistemaController sistemaController;
 	
+	@Autowired
+	private LivroController livroController;
+	
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	
 	
@@ -34,6 +39,12 @@ public class UserHistory_ItemsDisponiveisTests {
 	@DisplayName("Busca de livros com base na massa de dados do Flyway")
 	void testarLivrosDisponiveis() {
 		assertThat(sistemaController.pegarLivrosDisponiveis(new ItemFiltroDto()).size()).isEqualTo(3);
+	}
+	
+	@Test
+	@DisplayName("Busca de livros sem case sensitive")
+	void testarLivrosInsensitive() {
+		assertTrue(livroController.findByTituloIgnoreCase("star").size() == 1);
 	}
 	
 	@Test

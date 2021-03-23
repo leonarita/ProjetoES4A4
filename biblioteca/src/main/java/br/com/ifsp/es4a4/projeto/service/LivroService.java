@@ -22,6 +22,10 @@ public class LivroService {
 		return this.livroRepository.findById(id).orElse(null);
 	}
 	
+	public List<Livro> findByTituloIgnoreCase(String titulo) {
+		return this.livroRepository.findByTituloContainingIgnoreCase(titulo);
+	}
+	
 	public Livro create(Livro livro) {
 		return this.livroRepository.save(livro);
 	}

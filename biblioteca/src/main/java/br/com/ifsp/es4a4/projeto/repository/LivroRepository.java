@@ -10,5 +10,7 @@ import br.com.ifsp.es4a4.projeto.model.Livro;
 public interface LivroRepository extends CrudRepository<Livro, Long>, JpaSpecificationExecutor<Livro> {
 
 	List<Livro> findAll();
+	
+	List<Livro> findByTituloContainingIgnoreCase(String titulo);
 
 }

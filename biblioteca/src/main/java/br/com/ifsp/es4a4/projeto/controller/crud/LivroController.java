@@ -46,6 +46,11 @@ public class LivroController {
 		return LivroMapper.entityToDto(this.livroService.findById(id));
 	}
 	
+	@GetMapping("/titulo")
+	public List<LivroDto> findByTituloIgnoreCase(@RequestParam(required = false) String titulo) {
+		return this.livroService.findByTituloIgnoreCase(titulo).stream().map(LivroMapper::entityToDto).collect(Collectors.toList());
+	}
+	
 	@GetMapping("/parametros")
 	public List<LivroDto> findByParameters(@RequestParam(required = false) String title) {
 		return this.livroSpecRepository.findBooks(
