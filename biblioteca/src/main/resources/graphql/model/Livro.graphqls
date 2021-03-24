@@ -1,5 +1,0 @@
-type Livro {
-	id: ID!
-	titulo: String
-	subtitulo: String
-}

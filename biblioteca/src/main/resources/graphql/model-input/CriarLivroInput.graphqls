@@ -1,7 +1,0 @@
-input CriarLivroInput {
-    titulo: String
-    areaConhecimento: String
-    codigoCatalogacao: String
-    isbn: ID
-}
-

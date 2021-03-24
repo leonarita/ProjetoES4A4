@@ -37,5 +37,4 @@ biblioteca:
   mail:
     username: library.ifsp@gmail.com
     password: 
-  file:
-    dir: \Teste\upload  
+

@@ -20,7 +20,6 @@
 		<java.version>11</java.version>
 		
 		<mail.version>1.4.7</mail.version>
-		<graphql-spring-boot.version>5.0.2</graphql-spring-boot.version>
 		<graphql.version>8.0.0</graphql.version>
 	</properties>
 
@@ -108,34 +107,6 @@
 	      	<artifactId>graphql-spring-boot-starter</artifactId>
 	      	<version>${graphql.version}</version>
     	</dependency>
-    	
-    	<dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphiql-spring-boot-starter</artifactId>
-            <version>${graphql-spring-boot.version}</version>
-        </dependency>
-		
-		<dependency>
-	      	<groupId>com.graphql-java-kickstart</groupId>
-	      	<artifactId>playground-spring-boot-starter</artifactId>
-	      	<version>${graphql.version}</version>
-	      	<scope>runtime</scope>
-    	</dependency>
-    	
-    	<!--  
-    	
-    	<dependency>
-		    <groupId>com.graphql-java</groupId>
-		    <artifactId>graphql-spring-boot-starter-test</artifactId>
-		    <version>5.0.1</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>com.graphql-java</groupId>
-		    <artifactId>graphql-spring-boot-test-autoconfigure</artifactId>
-		    <version>5.0.2</version>
-		</dependency>
-		-->
 
 	</dependencies>
 

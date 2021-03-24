@@ -17,9 +17,6 @@ import graphql.ExecutionResult;
 @CrossOrigin("*")
 @AllowAnnonymous
 public class GraphQLController {
-
-	// http://localhost:8080/playground
-	// http://localhost:8080/graphiql
 	
 	@Autowired
 	private GraphQLService graphQLService;
