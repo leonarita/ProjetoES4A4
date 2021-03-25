@@ -1,0 +1,10 @@
+# All mutations available in graphql
+type Mutation {
+
+    criarLivro(input: CriarLivroInput!): Livro!
+    deletarLivro(id: ID): Status
+
+    uploadFile: ID!
+}
+
+

@@ -1,0 +1,6 @@
+# All available queries on this graphql server
+type Query {
+    todosLivros: [Livro]
+    livroId(id: ID): Livro
+    livro(titulo: String): Livro
+}
