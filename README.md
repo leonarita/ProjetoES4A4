@@ -8,7 +8,7 @@
 <img src="/.documents/Diagrama de Classes - Sistema Biblioteca.png">
 <br>
 
-O projeto é predominantemente uma API REST, e possue também traços de API GraphQL.
+O projeto é composto por uma API REST e uma API GraphQL.
 
 <br>
 
@@ -61,6 +61,7 @@ As configurações de banco de dados (url, driver, username password) também es
 7. Javamailer
 8. Flyway
 9. jUnit 5
+10. Cucumber (que, como é baseado no jUnit 4, tem um projeto só pra ele)
 
 <br>
 
