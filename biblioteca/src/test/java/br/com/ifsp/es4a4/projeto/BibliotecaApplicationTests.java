@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class BibliotecaApplicationTests {
 	
-	// CUCUMBER (BDD)
+	// CUCUMBER (BDD) : Testes em cenários (o cucumber foi baseado no jUnit 4)
 
 	@Test
 	void contextLoads() {

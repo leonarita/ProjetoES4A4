@@ -19,6 +19,7 @@
 	<properties>
 		<java.version>11</java.version>
 		
+		<swagger.version>2.9.2</swagger.version>
 		<mail.version>1.4.7</mail.version>
 		<graphql.version>8.0.0</graphql.version>
 	</properties>
@@ -92,6 +93,20 @@
 			<version>0.9.1</version>
 		</dependency>
 		
+		<!-- Swagger -->
+		
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+
 		<!-- Reflections -->
 		
 		<dependency>

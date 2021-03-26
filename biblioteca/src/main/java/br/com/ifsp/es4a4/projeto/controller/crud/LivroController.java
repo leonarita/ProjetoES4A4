@@ -24,11 +24,14 @@ import br.com.ifsp.es4a4.projeto.model.enumerations.Situacao;
 import br.com.ifsp.es4a4.projeto.repository.spec.LivroSpecRepository;
 import br.com.ifsp.es4a4.projeto.service.LivroService;
 import br.com.ifsp.es4a4.projeto.utils.routes.AllowAnnonymous;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/livro")
 @RequiredArgsConstructor
+@Api(value = "Livros")
 @CrossOrigin(origins = "*")
 @AllowAnnonymous
 public class LivroController {
@@ -36,6 +39,7 @@ public class LivroController {
 	private final LivroService livroService;
 	private final LivroSpecRepository livroSpecRepository;
 
+	@ApiOperation(value = "Encontrar todos os livros")
 	@GetMapping
 	public List<LivroDto> findAll() {
 		return this.livroService.findAll().stream().map(LivroMapper::entityToDto).collect(Collectors.toList());

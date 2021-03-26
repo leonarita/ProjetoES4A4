@@ -25,6 +25,8 @@ public class CacheAnnotedClasses {
 		classes.add("br.com.ifsp.es4a4.projeto.graphql.GraphQLController");
 		classes.add("com.oembedler.moon.graphiql.boot.GraphiQLController");
 		classes.add("graphql.kickstart.playground.boot.PlaygroundController");
+		classes.add("springfox.documentation.swagger.web.ApiResourceController");
+		classes.add("org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController");
 	}
 	
 	public boolean classHasAnonymousAnnotation(String clazz) {
