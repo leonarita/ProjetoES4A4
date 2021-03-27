@@ -16,5 +16,14 @@ public enum Situacao {
 	public int getId() {
 		return id;
 	}
+	
+	public static Situacao findSituacaoById(int id) {
+		for(Situacao situacao : Situacao.values()) {
+			if(situacao.getId() == id) {
+				return situacao;
+			}
+		}
+		return null;
+	}
 
 }

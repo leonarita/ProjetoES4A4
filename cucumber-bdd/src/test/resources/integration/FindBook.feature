@@ -1,19 +1,17 @@
 # language: pt
-@BancoTeste
-Funcionalidade: Testar as operacoes basicas de banco
-  O sistema deve prover operações básicas de banco de forma correta.
+@FindBook
+Funcionalidade: Encontrar livro
 
   Contexto: Cria todas as contas e associa ao banco
-    Dado que as contas sao do "Banco do Brasil"
-      | dono                       | numero | saldo |
-      | Abias Corpus Da Silva      | 111    | 100   |
-      | Antônio Morrendo das Dores | 222    | 200   |
-      | Carabino Tiro Certo        | 333    | 200   |
-
-  Cenario: Verifica o total de contas criadas
-    Dado o calculo do total de contas criadas
-    Entao o total de contas e 3
-
-  Cenario: Verifica o total de dinheiro no banco
-    Dado o calculo do total de dinheiro
-    Entao o total de dinheiro no banco e 500
+    Dado que foram cadastrados os seguintes livros
+      | titulo       | isbn |
+      | Star Wars    | 111  |
+      | Harry Potter | 222  |
+      
+  Cenario: Cria todas as contas e associa ao banco
+    Dado que foi buscado o livro "Harry Potter"
+    E estah com status 2
+    Quando for encontrado
+    Entao deverah mudar o status para 3
+    
+    
