@@ -9,6 +9,6 @@ INTRODUÇÃO AO REDIS
 
 3) Comandos Básicos de Redis
   - keys *
-  - get "<key> []"
-  - del "<key> []"
+  - get "<key>::SimpleKey []"
+  - del "<key>::SimpleKey []"
 
