@@ -56,13 +56,14 @@ As configurações de banco de dados (url, driver, username password) também es
 2. Spring GraphQL
 3. Spring Data
 4. Spring Security
-5. JPA
-6. JWT
-7. Javamailer
-8. Flyway
-9. jUnit 5
-10. Cucumber (que, como é baseado no jUnit 4, tem um projeto só pra ele)
-11. Redis
+5. Spring Cache
+6. JPA e Hibernate
+7. JWT
+8. Javamailer
+9. Flyway
+10. jUnit 5
+11. Cucumber (que, como é baseado no jUnit 4, tem um projeto só pra ele)
+12. Redis
 
 <br>
 
