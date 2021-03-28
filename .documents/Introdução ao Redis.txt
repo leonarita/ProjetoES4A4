@@ -1,0 +1,14 @@
+INTRODUÇÃO AO REDIS
+
+1) Iniciando o Redis no Docker
+  - docker run -it --name redis -p 6379:6379 redi:5.0.3
+
+2) Acessando o Terminal do Redis no Docker
+  - docker exec -it /bin/bash
+  - redis-cli
+
+3) Comandos Básicos de Redis
+  - keys *
+  - get "<key> []"
+  - del "<key> []"
+
