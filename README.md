@@ -62,6 +62,7 @@ As configurações de banco de dados (url, driver, username password) também es
 8. Flyway
 9. jUnit 5
 10. Cucumber (que, como é baseado no jUnit 4, tem um projeto só pra ele)
+11. Redis
 
 <br>
 
