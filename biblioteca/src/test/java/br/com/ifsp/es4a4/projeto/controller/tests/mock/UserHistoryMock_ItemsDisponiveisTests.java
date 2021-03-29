@@ -2,6 +2,7 @@ package br.com.ifsp.es4a4.projeto.controller.tests.mock;
 
 import java.net.URI;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class UserHistoryMock_ItemsDisponiveisTests {
 		httpHeaders.add("Authorization", token);
 
 		mockMvc.perform(MockMvcRequestBuilders.post(uri).content("{}").contentType(MediaType.APPLICATION_JSON).headers(httpHeaders))
+			.andExpect(MockMvcResultMatchers.status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.size()", CoreMatchers.is(3)))
 			.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 	}
 
