@@ -26,6 +26,7 @@ O projeto é composto por uma API REST e uma API GraphQL.
 4. Insomnia ou Postman
 5. PostgreSQL
 6. DBeaver (opcional, interface gráfica para PostgreSQL)
+7. Docker
 
 <br>
 
@@ -47,6 +48,11 @@ Um aviso para os desenvolvedores é sempre evitar de deixar as senhas de email e
 
 ### OBS 3: Banco de Dados
 As configurações de banco de dados (url, driver, username password) também estão no arquivo application.yml na pasta src/main/resources.
+
+<br>
+
+### OBS 4: Redis
+Para ligar o redis no docker, use o comando: `docker run -it --name redis -p 6379:6379 redi:5.0.3`
 
 <br>
 
@@ -72,6 +78,31 @@ As configurações de banco de dados (url, driver, username password) também es
 Encontram-se na pasta src/test/java:
 - Testes Unitários: Feitos pelo jUnit
 - Testes de Integração: Feitos pelo jUnit
+
+<br>
+
+## ELK Stack (Elasticsearch, Logstash e Kibana)
+ELK Stack é um conjunto de ferramentas de coleta e análise de logs. <br>
+Essa stack pode ser tanto usado no site oficial (https://www.elastic.co/pt/downloads/) quanto no docker.
+
+<br>
+
+Caso instale na máquina local e esteja utilizando windows, siga os seguintes passos em 3 terminais (CMD):
+
+```
+1) LIGAR ELASTICSEARCH
+  - cd C:\Libs\kibana\bin
+  - kibana.bat
+
+2) LIGAR LOGSTASH
+  - Colocar o arquivo syslog.conf (localizado em /.documents) no diretório /conf do logstash
+  - cd C:\Libs\logstash
+  - .\bin\logstash.bat -f .\config\syslog.conf
+
+3) LIGAR KIBANA
+  - cd C:\Libs\kibana\bin
+  - kibana.bat
+```
 
 <br>
 
