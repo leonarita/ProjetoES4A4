@@ -101,6 +101,7 @@ Caso instale na máquina local e esteja utilizando windows, siga os seguintes pa
   - .\bin\logstash.bat -f .\config\syslog.conf
 
 3) LIGAR KIBANA
+  - Descomentar a linha "elasticsearch.hosts: ["http://localhost:9200"]" em /config/kibana.yml
   - cd C:\Libs\kibana\bin
   - kibana.bat
 ```
