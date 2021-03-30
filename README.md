@@ -83,7 +83,7 @@ Encontram-se na pasta src/test/java:
 
 ## ELK Stack (Elasticsearch, Logstash e Kibana)
 ELK Stack é um conjunto de ferramentas de coleta e análise de logs. <br>
-O Elasticsearch armazena os dados coletados pelo Logstash. O Kibana apresenta dashobards com esses dados.
+O Elasticsearch armazena os dados coletados pelo Logstash. O Kibana apresenta dashobards com esses dados. <br>
 Essa stack pode ser tanto usado no site oficial (https://www.elastic.co/pt/downloads/) quanto no docker.
 
 <br>
