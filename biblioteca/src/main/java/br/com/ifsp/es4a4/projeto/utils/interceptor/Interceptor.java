@@ -3,6 +3,8 @@ package br.com.ifsp.es4a4.projeto.utils.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -20,6 +22,8 @@ public class Interceptor implements HandlerInterceptor {
 	
 	private final UserSecurityService userSecurityService;
 	private final CacheAnnotedClasses cacheAnnotedClasses;
+	
+	private static final Logger logger = LoggerFactory.getLogger(Interceptor.class);
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -51,6 +55,9 @@ public class Interceptor implements HandlerInterceptor {
 			return false;
 		}
 		catch (Exception e) {
+			
+			logger.error("Erro ao acessar endpoint: " + e.getMessage());
+			
 			return false;
 		}
 		

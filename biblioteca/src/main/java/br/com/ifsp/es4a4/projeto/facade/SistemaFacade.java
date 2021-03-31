@@ -30,9 +30,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class SistemaFacade {
-	
-	// PATTERN -> AGRUPA REGRAS DE NEGÓCIOS COMPLEXAS
-	
+		
 	private final SenderEmail senderEmail;
 	private final UserSecurityService userSecurityService;
 	private final ItemsFactory devolutionFactory;

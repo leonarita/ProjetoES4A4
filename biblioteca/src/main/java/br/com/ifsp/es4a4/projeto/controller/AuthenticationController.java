@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +29,8 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "*")
 public class AuthenticationController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+	
 	private final UserSecurityService userSecurityService;
 	
 	@AllowAnnonymous
@@ -38,8 +42,11 @@ public class AuthenticationController {
 	
 	@AllowAnnonymous
 	@PostMapping("/login")
-	public ResponseEntity<UserAutheticatedDTO> autenticar(@RequestBody DadosLogin data){
+	public ResponseEntity<UserAutheticatedDTO> autenticar(@RequestBody DadosLogin data) {
+		logger.info("Tentativa de login...");
+
 		Usuario user = userSecurityService.authenticate(data);
+		logger.info("Login realizado com sucesso");
 		return new ResponseEntity<UserAutheticatedDTO>(UserAutheticatedDTO.toDTO(user, "Bearer "), HttpStatus.ACCEPTED);
 	}
 	

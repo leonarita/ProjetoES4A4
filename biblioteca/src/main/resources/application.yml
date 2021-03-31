@@ -34,6 +34,8 @@ spring:
     host: localhost
     port: 6379
 
+logging:  file:    path: C:\Teste
+
 biblioteca:
   mail:
     username: library.ifsp@gmail.com

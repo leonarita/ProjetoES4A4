@@ -16,18 +16,20 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Service
-@Slf4j
 public class SenderEmail {
 	
 	private Properties props;
 	private final SmtpAuthenticator auth;
+	
+	private static final Logger logger = LoggerFactory.getLogger(SenderEmail.class);
 	
 	@Autowired
 	public SenderEmail(@Qualifier("mailer") SmtpAuthenticator smtp) {
@@ -41,11 +43,11 @@ public class SenderEmail {
 			MimeMessage message = this.configMessage(email, this.config());
 			Transport.send(message);
 		
-			log.info("Email enviado com sucesso!");
+			logger.info("Email enviado com sucesso!");
 			return true;
 		}
 		catch(Exception e) {
-			log.error("Erro ao enviar email: " + e.getMessage());
+			logger.error("Erro ao enviar email: " + e.getMessage());
 			return false;
 		}
 	}
