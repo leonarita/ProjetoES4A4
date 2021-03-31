@@ -68,8 +68,9 @@ Para ligar o redis no docker, use o comando: `docker run -it --name redis -p 637
 8. Javamailer
 9. Flyway
 10. jUnit 5
-11. Cucumber (que, como é baseado no jUnit 4, tem um projeto só pra ele)
+11. Cucumber (que, por ser baseado no jUnit 4, tem um projeto só pra ele)
 12. Redis
+13. Feign
 
 <br>
 
