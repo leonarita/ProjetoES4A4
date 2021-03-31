@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: 'biblioteca'
+    name: 'biblioteca-graphql'
 
   datasource:
     driverClassName: org.postgresql.Driver
@@ -36,3 +36,6 @@ graphql:
 biblioteca:
   file:
     dir: \Teste\upload  
+  url: http://127.0.0.1:8080
+  
+  
