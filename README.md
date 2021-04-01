@@ -82,6 +82,12 @@ Encontram-se na pasta src/test/java:
 
 <br>
 
+Foram aplicados as seguintes técnicas de testes:
+- Test Driven Design (TDD)
+- Behavior Driven Development (BDD)
+
+<br>
+
 ## ELK Stack (Elasticsearch, Logstash e Kibana)
 ELK Stack é um conjunto de ferramentas de coleta e análise de logs. <br>
 O Elasticsearch armazena os dados coletados pelo Logstash. O Kibana apresenta dashobards com esses dados. <br>
