@@ -37,6 +37,8 @@ spring:
 logging:  file:    path: C:\Teste
 
 biblioteca:
+  file:
+    dir: \Teste\upload
   mail:
     username: library.ifsp@gmail.com
     password: 
