@@ -26,7 +26,8 @@ O projeto é composto por uma API REST e uma API GraphQL.
 4. Insomnia ou Postman
 5. PostgreSQL
 6. DBeaver (opcional, interface gráfica para PostgreSQL)
-7. Docker
+7. Redis
+8. Docker (opcional)
 
 <br>
 
@@ -52,6 +53,7 @@ As configurações de banco de dados (url, driver, username password) também es
 <br>
 
 ### OBS 4: Redis
+Para baixar no windows, [pode ser encontrado aqui](https://github.com/MSOpenTech/redis/archive/2.6.zip).
 Para ligar o redis no docker, use o comando: `docker run -it --name redis -p 6379:6379 redi:5.0.3`
 
 <br>
