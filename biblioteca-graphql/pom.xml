@@ -28,12 +28,6 @@
 	
 	<dependencies>
 	
-		<dependency>
-	      	<groupId>br.com.ifsp.es4a4.projeto</groupId>
-	      	<artifactId>biblioteca-feign</artifactId>
-	      	<version>0.0.1-SNAPSHOT</version>
-    	</dependency>
-	
 		<!-- Libs Commons -->
 
 		<dependency>
