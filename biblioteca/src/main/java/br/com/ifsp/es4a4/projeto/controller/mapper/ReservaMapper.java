@@ -1,5 +1,6 @@
 package br.com.ifsp.es4a4.projeto.controller.mapper;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 import br.com.ifsp.es4a4.projeto.controller.dto.ReservaDto;
@@ -33,7 +34,7 @@ public abstract class ReservaMapper {
 		
 		return Reserva.builder()
 				.dataExpiracao(dto.getDataExpiracao())
-				.dataReserva(dto.getDataReserva())
+				.dataReserva(Calendar.getInstance())
 				.idItemAcervo(dto.getIdItemAcervo())
 				.idUsuarioComum(dto.getIdUsuarioComum())
 				.foiRetirado(dto.getFoiRetirado())
